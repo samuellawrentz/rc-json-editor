@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Json } from "./interfaces";
 import { JsonArray } from "./JsonArrayClass";
 import { Tree } from "./Tree";
+import "./style.scss";
 
 // Component that acts as a state adapter
 // Handles interactions between the tree and the parent component
@@ -28,7 +29,7 @@ export class TreeWrapper extends React.Component<Props, State> {
   }
   render() {
     return (
-      <div className="json-tree">
+      <div className="react-json-tree">
         <Tree data={this.jsonTree} />
       </div>
     );

@@ -4,7 +4,6 @@
 // Can be optimized and refactored a bit
 import React, { useState } from "react";
 import { JsonArray } from "./JsonArrayClass";
-import "./style.scss";
 
 interface Props {
   data: JsonArray;
@@ -15,7 +14,7 @@ export const Tree = ({ data, ...props }: Props) => {
     <div className="group">
       {data.map((item, idx) => {
         return (
-          <div key={item.path} className="child">
+          <div key={item.path} className="child node-row">
             <span
               onClick={(e) => {
                 data.addSubNode(idx, { key: "value" });
@@ -47,7 +46,7 @@ export const Tree = ({ data, ...props }: Props) => {
                 />
                 <span onClick={() => data.deleteNode(idx)}>🗑</span>
               </>
-            )}{" "}
+            )}
           </div>
         );
       })}
