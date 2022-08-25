@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/samuellawrentz/react-json-editor.git"
+    "url": "git+https://github.com/samuellawrentz/rc-json-editor.git"
   },
   "keywords": [
     "json-editor",
@@ -29,9 +29,9 @@
   "author": "Samuel Lawrentz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/samuellawrentz/react-json-editor/issues"
+    "url": "https://github.com/samuellawrentz/rc-editor/issues"
   },
-  "homepage": "https://github.com/samuellawrentz/react-json-editor#readme",
+  "homepage": "https://samuellawrentz.github.io/rc-json-editor/",
   "devDependencies": {
     "@babel/core": "^7.18.13",
     "@storybook/addon-actions": "^6.5.10",
