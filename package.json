@@ -2,10 +2,12 @@
   "name": "react-json-editor",
   "version": "1.0.0",
   "description": "A simple JSON Editor React Component",
-  "main": "index.js",
+  "main": "build/index.js",
+  "module": "build/index.es.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "build": "rollup -c"
   },
   "repository": {
     "type": "git",
@@ -32,13 +34,20 @@
     "eslint": "^8.22.0",
     "eslint-plugin-react": "^7.31.0",
     "react": "^18.2.0",
-    "typescript": "^4.7.4"
-  },
-  "dependencies": {
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-uglify": "^6.0.4",
+    "typescript": "^4.7.4",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "^18.2.0"
   }
 }
