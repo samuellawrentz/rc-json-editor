@@ -31,6 +31,8 @@ There are no big dependencies per se.
 This is a simple usage example
 
 ```jsx
+import { TreeWrapper } from 'rc-json-editor';
+
 <TreeWrapper
   data={{
     order: {
