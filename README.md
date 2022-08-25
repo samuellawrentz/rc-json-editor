@@ -28,6 +28,12 @@ There are no big dependencies per se.
 
 ## Usage
 
+Install the package from npm
+
+```bash
+npm install rc-json-editor
+```
+
 This is a simple usage example
 
 ```jsx
