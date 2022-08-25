@@ -25,3 +25,24 @@ There are no big dependencies per se.
 ## Things to do
 - Provide the full control of the rendering part as a prop
 - Provide event callbacks
+
+## Usage
+
+This is a simple usage example
+
+```jsx
+<TreeWrapper
+  data={{
+    order: {
+      id: 'order_124831sf23j123',
+      isSuccess: true,
+      price: 70000
+    }
+  }}
+  onChange={() => {}}
+/>
+```
+
+## Props
+- `data` - A JSON that needs to be viewed/edited
+- `onChange` - A callback that gets executed when the `data` is updated
