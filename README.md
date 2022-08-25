@@ -58,3 +58,4 @@ import { TreeWrapper } from 'rc-json-editor';
 
 #### Storybook
 Find the demo here - https://samuellawrentz.github.io/react-json-editor/?path=/story/introduction--page
+NPM package link - https://www.npmjs.com/package/rc-json-editor
