@@ -1,0 +1,60 @@
+
+  .group .group {
+    margin: 0 12px;
+  }
+  
+  .group .child {
+    margin: 8px 0;
+  }
+  
+  .json-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .json-container > div {
+    border: 1px solid grey;
+    padding: 16px;
+    margin-bottom: 16px;
+    min-width: 400px;
+  }
+  
+  body {
+    font-size: 18px;
+    color: #444;
+  }
+  
+  h1,
+  h6 {
+    text-align: center;
+  }
+  
+  h1 {
+    margin-bottom: 12px;
+  }
+  
+  h6 {
+    margin-top: 10px;
+    margin-bottom: 40px;
+  }
+  
+  .group span {
+    cursor: pointer;
+    margin: 0 8px;
+    display: inline-grid;
+    height: 28px;
+    place-items: center;
+    line-height: 28px;
+  }
+  
+  input {
+    height: 24px;
+    margin: 0;
+    font-size: 16px;
+    padding: 0 4px;
+  }
+  

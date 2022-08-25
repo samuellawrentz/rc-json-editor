@@ -1,3 +1,3 @@
 export interface Json {
-    [key: string]: any
+  [key: string]: any;
 }

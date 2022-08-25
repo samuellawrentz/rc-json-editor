@@ -8,11 +8,7 @@ export class JsonArray extends Array {
   path: string;
   _updateTree: (state?: JsonArray) => void;
 
-  constructor(
-    json: Json,
-    path: string = "",
-    stateUpdater: (state: any) => void
-  ) {
+  constructor(json: Json, path = "", stateUpdater: (state: any) => void) {
     super();
     if (typeof json !== "object") return;
 
@@ -33,21 +29,21 @@ export class JsonArray extends Array {
   }
 
   // Inserts a node at the given index
-  addNode(idx:number, json: Json) {
+  addNode(idx: number, json: Json) {
     this._updateArray(json, idx);
     this._updateTree();
     return this;
   }
 
   // Inserts a sub-node at the given index
-  addSubNode(idx:number, json:Json) {
+  addSubNode(idx: number, json: Json) {
     if (this[idx].type === "object") return this[idx].value.addNode(0, json);
     this._updateArray(json, idx, true);
     this._updateTree();
     return this;
   }
 
-  deleteNode(idx:number) {
+  deleteNode(idx: number) {
     this.splice(idx, 1);
     this._updateTree();
     return this;
@@ -83,7 +79,7 @@ export class JsonArray extends Array {
 
   // Internal method that is used to update the array based on the propd
   // #private method
-  _updateArray(json: Json, idx?: any, subNode?: Boolean): void {
+  _updateArray(json: Json, idx?: any, subNode?: boolean): void {
     Object.keys(json).forEach((key) => {
       const prop = this._createNode(key, json);
       // If index is present, insert at index

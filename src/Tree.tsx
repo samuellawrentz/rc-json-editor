@@ -3,8 +3,8 @@
 // exhausted of objects in the tree
 // Can be optimized and refactored a bit
 import React, { useState } from "react";
-import { Json } from "./interfaces";
 import { JsonArray } from "./JsonArrayClass";
+import "./style.scss";
 
 interface Props {
   data: JsonArray;
