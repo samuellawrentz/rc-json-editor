@@ -1,20 +1,20 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import TreeWrapper from "./JsonTree";
+import JsonTree from "./JsonTree";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: "rc-json-editor",
-  component: TreeWrapper,
+  title: "Examples",
+  component: JsonTree,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     backgroundColor: { control: "color" },
   },
-} as ComponentMeta<typeof TreeWrapper>;
+} as ComponentMeta<typeof JsonTree>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof TreeWrapper> = (args) => (
-  <TreeWrapper {...args} />
+const Template: ComponentStory<typeof JsonTree> = (args) => (
+  <JsonTree {...args} />
 );
 
 export const Default = Template.bind({});

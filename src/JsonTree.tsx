@@ -15,7 +15,7 @@ interface Props {
   data: Json;
   onChange?: (state: JsonArray | never[]) => void;
 }
-export class TreeWrapper extends React.Component<Props, State> {
+export class JsonTree extends React.Component<Props, State> {
   jsonTree: JsonArray;
   constructor(props: Props) {
     super(props);
@@ -36,4 +36,4 @@ export class TreeWrapper extends React.Component<Props, State> {
   }
 }
 
-export default TreeWrapper;
+export default JsonTree;

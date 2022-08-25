@@ -22,8 +22,8 @@ There are no big dependencies per se.
 - react
 - react-dom
 
-## Things to do
-- Provide the full control of the rendering part as a prop
+## TBD: Things to do
+- Provide the full control of the rendering part as a prop, so that users can render the UI based on their needs.
 - Provide event callbacks
 
 ## Usage

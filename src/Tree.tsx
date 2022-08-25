@@ -16,6 +16,7 @@ export const Tree = ({ data, ...props }: Props) => {
         return (
           <div key={item.path} className="child node-row">
             <span
+              className="plus"
               onClick={(e) => {
                 data.addSubNode(idx, { key: "value" });
               }}

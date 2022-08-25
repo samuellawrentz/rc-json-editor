@@ -1,11 +1,45 @@
 
   .react-json-tree {
+    .plus {
+        border: 1px solid;
+        width: 28px;
+        line-height: 30px !important;
+    }
     .group {
+        &:last-child {
+            border-left: 0;
+        }
         .group {
-            margin: 0 12px;
-          }
-          .child {
-            margin: 8px 0;
+            margin: 0 16px;
+            position: relative;
+            .child {
+                margin: 8px 0;
+                padding-left: 16px;
+                position: relative;
+                &::before {
+                    content: '';
+                    position: absolute;
+                    display: block;
+                    height: calc(100% + 16px);
+                    top: 0px;
+                    left: 0;
+                    width: 1px;
+                    background-color: #000;
+                }
+                &:after {
+                    position: absolute;
+                    display: block;
+                    content: '';
+                    width: 16px;
+                    height: 1px;
+                    background-color: #000;
+                    top: 21px;
+                    left: 0;
+                }
+                 &:last-child:before {
+                    height: 22px;
+                }
+              }
           }
           span {
             cursor: pointer;

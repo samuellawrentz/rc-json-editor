@@ -22,8 +22,8 @@ There are no big dependencies per se.
 - react
 - react-dom
 
-## Things to do
-- Provide the full control of the rendering part as a prop
+## TBD: Things to do
+- Provide the full control of the rendering part as a prop, so that users can render the UI based on their needs.
 - Provide event callbacks
 
 ## Usage
@@ -58,3 +58,6 @@ import { TreeWrapper } from 'rc-json-editor';
 
 #### Storybook
 Find the demo here - https://samuellawrentz.github.io/react-json-editor/?path=/story/introduction--page
+
+#### NPM Package
+NPM package link - https://www.npmjs.com/package/rc-json-editor
