@@ -1,0 +1,44 @@
+{
+  "name": "react-json-editor",
+  "version": "1.0.0",
+  "description": "A simple JSON Editor React Component",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuellawrentz/react-json-editor.git"
+  },
+  "keywords": [
+    "json-editor",
+    "JSON",
+    "react-json-editor",
+    "json-viewer",
+    "react-json-tree"
+  ],
+  "author": "Samuel Lawrentz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/samuellawrentz/react-json-editor/issues"
+  },
+  "homepage": "https://github.com/samuellawrentz/react-json-editor#readme",
+  "devDependencies": {
+    "@types/jest": "^28.1.8",
+    "@types/node": "^18.7.13",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "eslint": "^8.22.0",
+    "eslint-plugin-react": "^7.31.0",
+    "react": "^18.2.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/parser": "^5.35.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1"
+  }
+}
