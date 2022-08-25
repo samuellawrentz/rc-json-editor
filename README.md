@@ -1,7 +1,7 @@
 # rc-json-editor
 A simple react component that handles your JSON editing woes in a wink 😉
 
-## `rc-json-editor` - The What and Why
+## The What and Why
 This is a simple React Component _(and hence the "rc")_ that takes your JSON as input and renders a beautiful UI which allows you to edit the JSON on the go. I searched the web for this component for my specific needs and was not able to find one. And so, I created one.
 
 ### Why do you want a json-editor component?
