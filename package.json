@@ -1,9 +1,12 @@
 {
-  "name": "react-json-tree-editor",
+  "name": "rc-json-editor",
   "version": "1.0.0",
   "description": "A simple JSON Editor React Component",
   "main": "build/index.js",
   "module": "build/index.es.js",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
