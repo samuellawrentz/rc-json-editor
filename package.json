@@ -12,6 +12,7 @@
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "build": "rollup -c",
     "storybook": "start-storybook -p 6006",
+    "deploy-storybook": "storybook-to-ghpages",
     "build-storybook": "build-storybook"
   },
   "repository": {
@@ -40,6 +41,7 @@
     "@storybook/builder-webpack4": "^6.5.10",
     "@storybook/manager-webpack4": "^6.5.10",
     "@storybook/react": "^6.5.10",
+    "@storybook/storybook-deployer": "^2.8.12",
     "@storybook/testing-library": "^0.0.13",
     "@types/jest": "^28.1.8",
     "@types/node": "^18.7.13",

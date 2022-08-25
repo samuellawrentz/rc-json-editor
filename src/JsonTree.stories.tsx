@@ -4,7 +4,7 @@ import TreeWrapper from "./JsonTree";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: "Example/Button",
+  title: "rc-json-editor",
   component: TreeWrapper,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
@@ -17,9 +17,9 @@ const Template: ComponentStory<typeof TreeWrapper> = (args) => (
   <TreeWrapper {...args} />
 );
 
-export const Primary = Template.bind({});
+export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Primary.args = {
+Default.args = {
   data: {
     order: {
       id: "order_124831sf23j123",

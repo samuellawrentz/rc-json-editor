@@ -8,7 +8,7 @@ This is a simple React Component _(and hence the "rc")_ that takes your JSON as 
 You may think, why waste time on a component, while you can put `content-editable="true"` on a `code` tag and allow your users to edit their JSON themselves. But the catch here is, not everyone knows the syntax of a JSON. This tool could help in that case.
 
 ### This is not the "Perfect" component
-It is just a start, issues and PRs are welcome if you find this component helping your needs.
+It is just a start, issues and PRs are welcome if you find this component helping your needs. Find the (Demo Storybook)[https://samuellawrentz.github.io/react-json-editor/?path=/story/introduction--page]
 
 ## The How?
 This component purely works on a custom Datatype called `JsonArray` which extends the `Array` class. So you know, it is an array of sorts, with some additional custom components.
@@ -48,3 +48,7 @@ import { TreeWrapper } from 'rc-json-editor';
 ## Props
 - `data` - A JSON that needs to be viewed/edited
 - `onChange` - A callback that gets executed when the `data` is updated
+
+
+#### Storybook
+Find the demo here - https://samuellawrentz.github.io/react-json-editor/?path=/story/introduction--page
