@@ -17,7 +17,7 @@ export default {
     }),
     external(),
     postcss(),
-    // uglify(),
+    uglify(),
     del({ targets: ["dist/*"] }),
   ],
   external: Object.keys(pkg.peerDependencies || {}),
