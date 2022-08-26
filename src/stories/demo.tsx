@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { JsonArray } from "../JsonArrayClass";
 import JsonEditor from "../JsonEditor";
 import { debounce } from "./utils";
@@ -6,19 +6,36 @@ import { debounce } from "./utils";
 function Demo() {
   const [err, setE] = useState("");
   const [json, setJson] = useState({
-    a: 1,
-    b: 2,
+    order_details: {
+      id: "iowoiu-123iu123oi",
+      // type: "product",
+      amount: "13200",
+      time: "12:00:00",
+    },
+    order_dispatched: false,
+    // customer_info: {
+    //   name: "Jane Doe",
+    //   email: "jane@doe.com",
+    //   join_date: "12-12-12",
+    // },
   });
+
+  useEffect(() => {
+    setE("");
+  }, [json]);
+
+  console.log(json);
 
   const handleChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
     try {
-      setE("");
       const pJson = JSON.parse(e.target?.value);
       setJson(pJson);
     } catch (e: any) {
       setE("Invalid JSON: " + e.message);
     }
   };
+
+  const dValue = JSON.stringify(json, null, 2);
   return (
     <div
       style={{
@@ -46,7 +63,7 @@ function Demo() {
       >
         <textarea
           rows={10}
-          defaultValue={JSON.stringify(json, null, 2)}
+          value={dValue}
           onChange={handleChange}
           style={{
             width: "calc(100% - 32px)",
