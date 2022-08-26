@@ -8,12 +8,12 @@ export class JsonArray extends Array {
   path: string;
   _updateTree: (state?: JsonArray) => void;
 
-  constructor(json: Json, path = "", stateUpdater: (state: any) => void) {
+  constructor(json?: Json, path = "", stateUpdater?: (state: any) => void) {
     super();
     if (typeof json !== "object") return;
 
     this.path = path;
-    this._updateTree = () => stateUpdater({ value: this });
+    this._updateTree = () => stateUpdater?.({ value: this });
     this._updateArray(json);
   }
 
@@ -36,9 +36,13 @@ export class JsonArray extends Array {
   }
 
   // Inserts a sub-node at the given index
-  addSubNode(idx: number, json: Json) {
-    if (this[idx].type === "object") return this[idx].value.addNode(0, json);
-    this._updateArray(json, idx, true);
+  addSubNode(idx: number) {
+    if (this[idx].type === "object") {
+      return this[idx].value.addNode(0, {
+        [`key${this[idx].value.length}`]: "value",
+      });
+    }
+    this._updateArray({ key: "value" }, idx, true);
     this._updateTree();
     return this;
   }

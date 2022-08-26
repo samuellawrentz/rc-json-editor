@@ -8,22 +8,19 @@ import "./style.scss";
 // Handles interactions between the tree and the parent component
 
 interface State {
-  value: JsonArray | never[];
+  value: JsonArray;
 }
 
 interface Props {
   data: Json;
-  onChange?: (state: JsonArray | never[]) => void;
+  onChange?: (state: JsonArray) => void;
   hasSelection?: boolean;
 }
 export class JsonEditor extends React.Component<Props, State> {
-  jsonTree: JsonArray;
   constructor(props: Props) {
     super(props);
-    this.jsonTree = new JsonArray(props.data, "", this.setState.bind(this));
-    this.state = {
-      value: [],
-    };
+    // We require state for refreshing the component on data update
+    this.state = { value: new JsonArray() };
   }
   componentDidUpdate(_: Props, pState: State) {
     if (this.state !== pState) this.props.onChange?.(this.state.value);
@@ -35,7 +32,9 @@ export class JsonEditor extends React.Component<Props, State> {
           this.props.hasSelection ? "has-selection" : ""
         }`}
       >
-        <Tree data={this.jsonTree} />
+        <Tree
+          data={new JsonArray(this.props.data, "", this.setState.bind(this))}
+        />
       </div>
     );
   }

@@ -28,7 +28,7 @@ export const Tree = ({ data, ...props }: Props) => {
               <span
                 className="plus"
                 onClick={(e) => {
-                  data.addSubNode(idx, { key: "value" });
+                  data.addSubNode(idx);
                 }}
               >
                 {"➕"}

@@ -3,6 +3,9 @@
     &.has-selection {
         padding-left: 40px;
     }
+    .row-items {
+        display: flex;
+    }
     .checkbox {
         position: absolute;
       }
@@ -18,11 +21,13 @@
         &:last-child {
             border-left: 0;
         }
+        .child {
+            margin: 8px 0;
+        }
         .group {
             margin: 0 16px;
             position: relative;
             .child {
-                margin: 8px 0;
                 padding-left: 16px;
                 position: relative;
                 &::before {
@@ -57,6 +62,7 @@
             height: 28px;
             place-items: center;
             line-height: 28px;
+            flex-shrink: 0;
           }
           input {
             height: 24px;
