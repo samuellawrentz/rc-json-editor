@@ -37,9 +37,9 @@ npm install rc-json-editor
 This is a simple usage example
 
 ```jsx
-import { TreeWrapper } from 'rc-json-editor';
+import { JsonEditor } from 'rc-json-editor';
 
-<TreeWrapper
+<JsonEditor
   data={{
     order: {
       id: 'order_124831sf23j123',

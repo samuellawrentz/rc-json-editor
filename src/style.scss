@@ -3,13 +3,16 @@
     &.has-selection {
         padding-left: 40px;
     }
-    .c {
+    .checkbox {
         position: absolute;
       }
     .plus {
         border: 1px solid;
         width: 28px;
         line-height: 30px !important;
+        + input {
+            margin-right: 16px !important;
+        }
     }
     .group {
         &:last-child {
@@ -39,11 +42,11 @@
                     width: 16px;
                     height: 1px;
                     background-color: #000;
-                    top: 21px;
+                    top: 16px;
                     left: 0;
                 }
                  &:last-child:before {
-                    height: 22px;
+                    height: 16px;
                 }
               }
           }

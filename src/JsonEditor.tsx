@@ -16,7 +16,7 @@ interface Props {
   onChange?: (state: JsonArray | never[]) => void;
   hasSelection?: boolean;
 }
-export class JsonTree extends React.Component<Props, State> {
+export class JsonEditor extends React.Component<Props, State> {
   jsonTree: JsonArray;
   constructor(props: Props) {
     super(props);
@@ -41,4 +41,4 @@ export class JsonTree extends React.Component<Props, State> {
   }
 }
 
-export default JsonTree;
+export default JsonEditor;

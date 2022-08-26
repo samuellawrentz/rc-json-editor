@@ -13,49 +13,42 @@ export const Tree = ({ data, ...props }: Props) => {
   return (
     <div className="group">
       {data.map((item, idx) => {
+        const isObject = item.type === "object";
         return (
           <div key={item.path} className="child node-row">
-            <span
-              className="c"
-              style={{
-                transform: `translate(-${item.level * 32 + 32}px, 8px)`,
-              }}
-            >
-              <input type={"checkbox"} />
-            </span>
-            <span
-              className="plus"
-              onClick={(e) => {
-                data.addSubNode(idx, { key: "value" });
-              }}
-            >
-              {"➕"}
-            </span>
-            <input
-              value={item.key}
-              onChange={(e) => {
-                data.updateNode(idx, e.target.value);
-              }}
-            />
-            <span className="spacer"></span>
-            {item.type === "object" ? (
-              <>
-                <input value={"Object"} disabled />
-                <span onClick={() => data.deleteNode(idx)}>🗑</span>
-                {/* Recursion */}
-                <Tree data={item.value} {...props} />
-              </>
-            ) : (
-              <>
-                <input
-                  value={item.value}
-                  onChange={(e) => {
-                    data.updateNode(idx, undefined, e.target.value);
-                  }}
-                />
-                <span onClick={() => data.deleteNode(idx)}>🗑</span>
-              </>
-            )}
+            <div className="row-items">
+              <span
+                className="checkbox"
+                style={{
+                  transform: `translate(-${item.level * 32 + 32}px, 2px)`,
+                }}
+              >
+                <input type={"checkbox"} />
+              </span>
+              <span
+                className="plus"
+                onClick={(e) => {
+                  data.addSubNode(idx, { key: "value" });
+                }}
+              >
+                {"➕"}
+              </span>
+              <input
+                value={item.key}
+                onChange={(e) => {
+                  data.updateNode(idx, e.target.value);
+                }}
+              />
+              <input
+                value={isObject ? "Object" : item.value}
+                disabled={isObject}
+                onChange={(e) => {
+                  data.updateNode(idx, undefined, e.target.value);
+                }}
+              />
+              <span onClick={() => data.deleteNode(idx)}>🗑</span>
+            </div>
+            {isObject && <Tree data={item.value} {...props} />}
           </div>
         );
       })}
