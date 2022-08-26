@@ -15,7 +15,14 @@ export const Tree = ({ data, ...props }: Props) => {
       {data.map((item, idx) => {
         return (
           <div key={item.path} className="child node-row">
-            <span className="c">c</span>
+            <span
+              className="c"
+              style={{
+                transform: `translate(-${item.level * 32 + 32}px, 8px)`,
+              }}
+            >
+              <input type={"checkbox"} />
+            </span>
             <span
               className="plus"
               onClick={(e) => {

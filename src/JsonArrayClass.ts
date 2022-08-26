@@ -66,8 +66,10 @@ export class JsonArray extends Array {
   _createNode(key: string, json: Json) {
     const isObject = typeof json[key] === "object";
     const xPath = `${this.path}[${this.length}]`;
+    const level = (xPath.match(/value/g) || []).length;
     return {
       key,
+      level,
       type: typeof json[key],
       path: xPath,
       value: isObject

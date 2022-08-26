@@ -1,5 +1,11 @@
 
   .react-json-tree {
+    &.has-selection {
+        padding-left: 40px;
+    }
+    .c {
+        position: absolute;
+      }
     .plus {
         border: 1px solid;
         width: 28px;
@@ -56,9 +62,4 @@
             padding: 0 4px;
           }
     }
-  }
-
-
-  .c {
-    position: absolute;
   }

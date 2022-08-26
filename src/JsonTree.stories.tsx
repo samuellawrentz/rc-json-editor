@@ -27,4 +27,5 @@ Default.args = {
       isSuccess: true,
     },
   },
+  hasSelection: true,
 };

@@ -14,6 +14,7 @@ interface State {
 interface Props {
   data: Json;
   onChange?: (state: JsonArray | never[]) => void;
+  hasSelection?: boolean;
 }
 export class JsonTree extends React.Component<Props, State> {
   jsonTree: JsonArray;
@@ -29,7 +30,11 @@ export class JsonTree extends React.Component<Props, State> {
   }
   render() {
     return (
-      <div className="react-json-tree">
+      <div
+        className={`react-json-tree ${
+          this.props.hasSelection ? "has-selection" : ""
+        }`}
+      >
         <Tree data={this.jsonTree} />
       </div>
     );
