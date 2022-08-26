@@ -4,10 +4,21 @@ import JsonEditor from "../JsonEditor";
 import { debounce } from "./utils";
 
 function Demo() {
+  const [err, setE] = useState("");
   const [json, setJson] = useState({
     a: 1,
     b: 2,
   });
+
+  const handleChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    try {
+      setE("");
+      const pJson = JSON.parse(e.target?.value);
+      setJson(pJson);
+    } catch (e: any) {
+      setE("Invalid JSON: " + e.message);
+    }
+  };
   return (
     <div
       style={{
@@ -17,6 +28,7 @@ function Demo() {
         display: "flex",
         border: "1px solid #d1d1d1",
         flexDirection: "column",
+        position: "relative",
         gap: 24,
       }}
     >
@@ -34,7 +46,8 @@ function Demo() {
       >
         <textarea
           rows={10}
-          value={JSON.stringify(json, null, 2)}
+          defaultValue={JSON.stringify(json, null, 2)}
+          onChange={handleChange}
           style={{
             width: "calc(100% - 32px)",
             height: "100%",
@@ -46,6 +59,16 @@ function Demo() {
           }}
         ></textarea>
       </div>
+      <span
+        style={{
+          position: "absolute",
+          bottom: 12,
+          fontSize: 12,
+          color: "#e80a0a",
+        }}
+      >
+        {err}
+      </span>
     </div>
   );
 }
