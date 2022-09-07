@@ -20,7 +20,9 @@ export class JsonEditor extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     // We require state for refreshing the component on data update
-    this.state = { value: new JsonArray() };
+    this.state = {
+      value: new JsonArray(this.props.data, "", this.setState.bind(this)),
+    };
   }
   componentDidUpdate(_: Props, pState: State) {
     if (this.state !== pState) this.props.onChange?.(this.state.value);
@@ -32,9 +34,7 @@ export class JsonEditor extends React.Component<Props, State> {
           this.props.hasSelection ? "has-selection" : ""
         }`}
       >
-        <Tree
-          data={new JsonArray(this.props.data, "", this.setState.bind(this))}
-        />
+        <Tree data={this.state.value} />
       </div>
     );
   }

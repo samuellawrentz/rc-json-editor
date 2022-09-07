@@ -6,25 +6,12 @@ import { debounce } from "./utils";
 function Demo() {
   const [err, setE] = useState("");
   const [json, setJson] = useState({
-    order_details: {
-      id: "iowoiu-123iu123oi",
-      // type: "product",
-      amount: "13200",
-      time: "12:00:00",
-    },
-    order_dispatched: false,
-    // customer_info: {
-    //   name: "Jane Doe",
-    //   email: "jane@doe.com",
-    //   join_date: "12-12-12",
-    // },
+    parent: [{ a: 123, b: "hello" }, { c: true }],
   });
 
   useEffect(() => {
     setE("");
   }, [json]);
-
-  console.log(json);
 
   const handleChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
     try {
