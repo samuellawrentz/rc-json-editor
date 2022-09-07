@@ -21,7 +21,12 @@ export class JsonEditor extends React.Component<Props, State> {
     super(props);
     // We require state for refreshing the component on data update
     this.state = {
-      value: new JsonArray(this.props.data, "", this.setState.bind(this)),
+      value: new JsonArray(
+        this.props.data,
+        undefined,
+        "",
+        this.setState.bind(this)
+      ),
     };
   }
   componentDidUpdate(_: Props, pState: State) {

@@ -6,7 +6,7 @@ import { debounce } from "./utils";
 function Demo() {
   const [err, setE] = useState("");
   const [json, setJson] = useState({
-    parent: [{ a: 123, b: "hello" }, { c: true }],
+    parent: { child: { child1: 123 } },
   });
 
   useEffect(() => {

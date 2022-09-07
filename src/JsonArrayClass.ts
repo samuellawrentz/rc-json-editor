@@ -15,10 +15,15 @@ const DEFAULT_VALUES = {
 export class JsonArray extends Array {
   path: string;
   mode: string;
+  value: JsonArray;
+  isObject: boolean;
+  selected: boolean;
+  parent: JsonArray | undefined;
   protected updateTree: (state?: JsonArray) => void;
 
   constructor(
-    json?: Json,
+    json: Json,
+    parent: JsonArray | undefined,
     path = "",
     stateUpdater?: (state: any) => void,
     mode = "schema"
@@ -27,6 +32,7 @@ export class JsonArray extends Array {
     if (typeof json !== "object") return;
     this.mode = mode;
     this.path = path;
+    this.parent = parent;
     this.updateTree = () => stateUpdater?.({ value: this });
     this._updateArray(json);
   }
@@ -83,8 +89,25 @@ export class JsonArray extends Array {
     return this;
   }
 
+  selectAllChildren(checked: boolean) {
+    this.forEach((i, j) => {
+      if (i.isObject) this.updateSelection(j, checked);
+      i.selected = checked;
+    });
+  }
+
   updateSelection(idx: number, checked: boolean) {
     this[idx].selected = checked;
+    if (this[idx].isObject) this[idx].value.selectAllChildren(checked);
+    if (this.every((item) => item.selected === checked) && this.parent) {
+      // debugger;
+      const parentIndex = parseInt(
+        /value\[(\d+)\].value$/gi.exec(this.path)?.[1] || "0"
+      );
+      this.parent[parentIndex].selected = checked;
+
+      // this.parent?.updateSelection(parentIndex, checked);
+    }
     this.updateTree();
     return this;
   }
@@ -98,6 +121,7 @@ export class JsonArray extends Array {
     if (toType === "object" || toType === "array") {
       this[index].value = new JsonArray(
         this[index].value,
+        this.parent,
         this[index].path + ".value",
         this.updateTree
       );
@@ -119,12 +143,18 @@ export class JsonArray extends Array {
       path: xPath,
       value: isObject
         ? // Recursion if object
-          new JsonArray(json[key], xPath + ".value", this.updateTree, this.mode)
+          new JsonArray(
+            json[key],
+            this.parent,
+            xPath + ".value",
+            this.updateTree,
+            this.mode
+          )
         : json[key],
     };
   }
 
-  protected isObject(obj: Json) {
+  protected static getType(obj: Json) {
     return !!obj && obj.constructor === Array
       ? "array"
       : typeof obj === "object"
@@ -134,17 +164,18 @@ export class JsonArray extends Array {
 
   protected createNode1(key: string, json: Json) {
     let value = json[key];
-    const isObject = this.isObject(value);
+    const isObject = JsonArray.getType(value);
     const xPath = `${this.path}[${this.length}]`;
     const level = (xPath.match(/value/g) || []).length;
     if (isObject === "array") {
       const arrayObject = value.reduce((acc: Json, curr: Json) => {
-        if (this.isObject(curr))
+        if (JsonArray.getType(curr))
           Object.keys(curr).forEach((objKey) => (acc[objKey] = curr[objKey]));
         return acc;
       }, {});
       value = new JsonArray(
         arrayObject,
+        this,
         xPath + ".value",
         this.updateTree,
         this.mode
@@ -152,6 +183,7 @@ export class JsonArray extends Array {
     } else if (isObject === "object") {
       value = new JsonArray(
         value,
+        this,
         xPath + ".value",
         this.updateTree,
         this.mode
@@ -161,7 +193,9 @@ export class JsonArray extends Array {
     return {
       key,
       level,
+      parent: this.parent,
       selected: false,
+      isObject: !!isObject,
       type: isObject || typeof json[key],
       path: xPath,
       value,
@@ -177,11 +211,11 @@ export class JsonArray extends Array {
       // Or push at the end
 
       if (subNode) {
-        console.log("asdf", this[idx]);
-
         this[idx].type = "object";
+        this[idx].isObject = true;
         this[idx].value = new JsonArray(
           json,
+          this,
           this[idx].path + ".value",
           this.updateTree,
           this.mode
