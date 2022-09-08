@@ -81,14 +81,14 @@ export class JsonArray extends Array {
   }
 
   // Inserts a node at the given index
-  addNode(idx: number, json: Json, selected: boolean) {
+  public addNode(idx: number, json: Json, selected: boolean) {
     this.updateArray(json, idx, undefined, selected);
     this.updateTree();
     return this;
   }
 
   // Inserts a sub-node at the given index
-  addSubNode(idx: number, selected: boolean, isEmpty = false) {
+  public addSubNode(idx: number, selected: boolean, isEmpty = false) {
     if (this[idx].type === "object" || this[idx].type === "array") {
       const data = isEmpty
         ? {}
@@ -102,14 +102,14 @@ export class JsonArray extends Array {
     return this;
   }
 
-  deleteNode(idx: number) {
+  public deleteNode(idx: number) {
     this.splice(idx, 1);
     this.updateTree();
     return this;
   }
 
   // Update individual node
-  updateNode(index: number, key?: string, value?: string) {
+  public updateNode(index: number, key?: string, value?: string) {
     try {
       if (key !== undefined) this[index].key = key;
       if (value !== undefined) this[index].value = value;
@@ -120,14 +120,14 @@ export class JsonArray extends Array {
     return this;
   }
 
-  selectAllChildren(checked: boolean) {
+  protected selectAllChildren(checked: boolean) {
     this.forEach((i, j) => {
       if (i.isObject) this.updateSelection(j, checked);
       i.selected = checked;
     });
   }
 
-  updateSelection(idx: number, checked: boolean) {
+  public updateSelection(idx: number, checked: boolean) {
     this[idx].selected = checked;
     if (this[idx].isObject) this[idx].value.selectAllChildren(checked);
     if (this.every((item) => item.selected === checked) && this.parent) {
@@ -140,7 +140,7 @@ export class JsonArray extends Array {
     return this;
   }
   // Update individual node
-  updateNodeType(index: number, toType: DataTypes) {
+  public updateNodeType(index: number, toType: DataTypes) {
     this[index].type = toType;
     this[index].value = DEFAULT_VALUES[toType];
     this[index].isObject = false;
@@ -198,7 +198,7 @@ export class JsonArray extends Array {
 
   // Internal method that is used to update the array based on the propd
   // #private method
-  updateArray(
+  private updateArray(
     json: Json,
     idx?: any,
     subNode?: boolean,

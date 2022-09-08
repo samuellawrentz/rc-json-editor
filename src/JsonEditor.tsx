@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Json, TreeData } from "./interfaces";
 import { JsonArray } from "./JsonArrayClass";
 import { Tree } from "./Tree";
@@ -69,9 +69,11 @@ export class JsonEditor extends React.Component<Props, State> {
         ],
       },
     ];
-    const jArray = JsonArray.transformTree(
-      treeData as Array<TreeData>,
-      new JsonArray({}, undefined, undefined, this.setState.bind(this))
+    const jArray = new JsonArray(
+      this.props.data,
+      undefined,
+      undefined,
+      this.setState.bind(this)
     );
     this.state = {
       value: jArray,
