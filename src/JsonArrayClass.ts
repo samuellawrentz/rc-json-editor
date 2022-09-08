@@ -5,10 +5,9 @@
 
 // TODO
 // 1. Remove 'any'
-// 2. Rectify the types
-// 3. Remove unwanted lines
+// 2. Remove unwanted lines
 
-import { Json, TreeData } from "./interfaces";
+import { DataTypes, Json, TreeData } from "./interfaces";
 
 const DEFAULT_VALUES: Json = {
   string: "default string",
@@ -19,19 +18,16 @@ const DEFAULT_VALUES: Json = {
 };
 
 export class JsonArray extends Array {
-  path: string;
-  mode: string;
-  value: JsonArray;
-  isObject: boolean;
-  selected: boolean;
-  parent: JsonArray | undefined;
-  protected updateTree: (state?: JsonArray) => void;
+  private path: string;
+  private mode: string;
+  private parent: JsonArray | undefined;
+  protected updateTree: () => void;
 
   constructor(
     json: Json,
     parent: JsonArray | undefined,
     path = "",
-    stateUpdater?: (state: any) => void,
+    stateUpdater?: (state: { value: JsonArray }) => void,
     mode = "schema"
   ) {
     super();
@@ -40,7 +36,7 @@ export class JsonArray extends Array {
     this.path = path;
     this.parent = parent;
     this.updateTree = () => stateUpdater?.({ value: this });
-    this._updateArray(json);
+    this.updateArray(json);
   }
 
   // util Method
@@ -86,7 +82,7 @@ export class JsonArray extends Array {
 
   // Inserts a node at the given index
   addNode(idx: number, json: Json, selected: boolean) {
-    this._updateArray(json, idx, undefined, selected);
+    this.updateArray(json, idx, undefined, selected);
     this.updateTree();
     return this;
   }
@@ -101,7 +97,7 @@ export class JsonArray extends Array {
           };
       return this[idx].value.addNode(0, data, selected);
     }
-    this._updateArray({ key: "value" }, idx, true, selected);
+    this.updateArray({ key: "value" }, idx, true, selected);
     this.updateTree();
     return this;
   }
@@ -144,10 +140,7 @@ export class JsonArray extends Array {
     return this;
   }
   // Update individual node
-  updateNodeType(
-    index: number,
-    toType: "string" | "boolean" | "number" | "object" | "array"
-  ) {
+  updateNodeType(index: number, toType: DataTypes) {
     this[index].type = toType;
     this[index].value = DEFAULT_VALUES[toType];
     this[index].isObject = false;
@@ -164,7 +157,7 @@ export class JsonArray extends Array {
     return this;
   }
 
-  protected createNode(key: string, value: any, selected: boolean) {
+  protected createNode(key: string, value: Json, selected: boolean) {
     const isObject = JsonArray.getType(value);
     const xPath = `${this.path}[${this.length}]`;
     const level = (xPath.match(/value/g) || []).length;
@@ -205,14 +198,14 @@ export class JsonArray extends Array {
 
   // Internal method that is used to update the array based on the propd
   // #private method
-  _updateArray(
+  updateArray(
     json: Json,
     idx?: any,
     subNode?: boolean,
     selected = false
   ): void {
     Object.keys(json).forEach((key) => {
-      const prop = this.createNode(key, json[key], selected);
+      const node = this.createNode(key, json[key], selected);
       // If index is present, insert at index
       // Or push at the end
 
@@ -229,8 +222,8 @@ export class JsonArray extends Array {
         );
         // Select the newly added subnode
         this[idx].value[0].selected = selected;
-      } else if (idx) this.splice(idx, 0, prop);
-      else this.push(prop);
+      } else if (idx) this.splice(idx, 0, node);
+      else this.push(node);
     });
   }
 }

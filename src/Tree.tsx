@@ -3,6 +3,7 @@
 // exhausted of objects in the tree
 // Can be optimized and refactored a bit
 import React from "react";
+import { DataTypes } from "./interfaces";
 import { JsonArray } from "./JsonArrayClass";
 
 interface Props {
@@ -50,7 +51,7 @@ export const Tree = ({ data, ...props }: Props) => {
                   value={item.type}
                   style={{ width: 180 }}
                   onChange={(e) => {
-                    data.updateNodeType(idx, e.target.value);
+                    data.updateNodeType(idx, e.target.value as DataTypes);
                   }}
                 >
                   <option value="array">Array</option>
