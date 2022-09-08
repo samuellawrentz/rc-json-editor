@@ -24,13 +24,47 @@ export class JsonEditor extends React.Component<Props, State> {
       {
         key: "contact",
         data_type: "object",
-        selected: true,
+        selected: false,
         sub_object: [
           {
             key: "id",
-            data_type: "number",
-            selected: true,
-            sub_object: [],
+            data_type: "object",
+            selected: false,
+            sub_object: [
+              {
+                key: "new_id",
+                data_type: "number",
+                selected: false,
+                sub_object: [],
+              },
+            ],
+          },
+          {
+            key: "new_id3123",
+            data_type: "object",
+            selected: false,
+            sub_object: [
+              {
+                key: "new_id_sam",
+                data_type: "object",
+                selected: false,
+                sub_object: [
+                  {
+                    key: "new_id3123",
+                    data_type: "object",
+                    selected: false,
+                    sub_object: [
+                      {
+                        key: "new_id_sam",
+                        data_type: "number",
+                        selected: false,
+                        sub_object: [],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
           },
         ],
       },

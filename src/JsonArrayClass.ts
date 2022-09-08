@@ -69,7 +69,7 @@ export class JsonArray extends Array {
         treeItem.selected
       );
       if (treeItem.sub_object.length) {
-        const subNode = jArray.addSubNode(0, false, true);
+        const subNode = jArray.addSubNode(idx, false, true);
         JsonArray.transformTree(treeItem.sub_object, subNode);
       }
     });
