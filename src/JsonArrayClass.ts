@@ -2,14 +2,20 @@
 // Is the key class that creates a new datatype called JsonArray
 // Looks like an Array, works like an Array, but with custom methods
 // Concepts used - Inheritance, Recursion, OOP
-import { Json } from "./interfaces";
 
-const DEFAULT_VALUES = {
+// TODO
+// 1. Remove 'any'
+// 2. Rectify the types
+// 3. Remove unwanted lines
+
+import { Json, TreeData } from "./interfaces";
+
+const DEFAULT_VALUES: Json = {
   string: "default string",
   number: 100,
   boolean: true,
-  object: { key: "value" },
-  array: {},
+  object: {},
+  array: [],
 };
 
 export class JsonArray extends Array {
@@ -53,20 +59,23 @@ export class JsonArray extends Array {
   }
 
   // Inserts a node at the given index
-  addNode(idx: number, json: Json) {
-    this._updateArray(json, idx);
+  addNode(idx: number, json: Json, selected: boolean) {
+    this._updateArray(json, idx, undefined, selected);
     this.updateTree();
     return this;
   }
 
   // Inserts a sub-node at the given index
-  addSubNode(idx: number) {
+  addSubNode(idx: number, selected: boolean, isEmpty = false) {
     if (this[idx].type === "object" || this[idx].type === "array") {
-      return this[idx].value.addNode(0, {
-        [`key${this[idx].value.length}`]: "value",
-      });
+      const data = isEmpty
+        ? {}
+        : {
+            [`key${this[idx].value.length}`]: "value",
+          };
+      return this[idx].value.addNode(0, data, selected);
     }
-    this._updateArray({ key: "value" }, idx, true);
+    this._updateArray({ key: "value" }, idx, true, selected);
     this.updateTree();
     return this;
   }
@@ -100,13 +109,10 @@ export class JsonArray extends Array {
     this[idx].selected = checked;
     if (this[idx].isObject) this[idx].value.selectAllChildren(checked);
     if (this.every((item) => item.selected === checked) && this.parent) {
-      // debugger;
       const parentIndex = parseInt(
         /value\[(\d+)\].value$/gi.exec(this.path)?.[1] || "0"
       );
       this.parent[parentIndex].selected = checked;
-
-      // this.parent?.updateSelection(parentIndex, checked);
     }
     this.updateTree();
     return this;
@@ -118,10 +124,12 @@ export class JsonArray extends Array {
   ) {
     this[index].type = toType;
     this[index].value = DEFAULT_VALUES[toType];
+    this[index].isObject = false;
     if (toType === "object" || toType === "array") {
+      this[index].isObject = true;
       this[index].value = new JsonArray(
         this[index].value,
-        this.parent,
+        this,
         this[index].path + ".value",
         this.updateTree
       );
@@ -162,8 +170,7 @@ export class JsonArray extends Array {
       : undefined;
   }
 
-  protected createNode1(key: string, json: Json) {
-    let value = json[key];
+  protected createNode1(key: string, value: any, selected: boolean) {
     const isObject = JsonArray.getType(value);
     const xPath = `${this.path}[${this.length}]`;
     const level = (xPath.match(/value/g) || []).length;
@@ -194,25 +201,49 @@ export class JsonArray extends Array {
       key,
       level,
       parent: this.parent,
-      selected: false,
+      selected,
       isObject: !!isObject,
-      type: isObject || typeof json[key],
+      type: isObject || typeof value,
       path: xPath,
       value,
     };
   }
 
+  static transformTree(tree: Array<TreeData>, jArray: JsonArray) {
+    // debugger;
+    tree.forEach((treeItem: TreeData, idx) => {
+      jArray.addNode(
+        idx,
+        {
+          [treeItem.key]: DEFAULT_VALUES[treeItem.data_type],
+        },
+        treeItem.selected
+      );
+      if (treeItem.sub_object.length) {
+        const subNode = jArray.addSubNode(0, false, true);
+        JsonArray.transformTree(treeItem.sub_object, subNode);
+      }
+    });
+    return jArray;
+  }
+
   // Internal method that is used to update the array based on the propd
   // #private method
-  _updateArray(json: Json, idx?: any, subNode?: boolean): void {
+  _updateArray(
+    json: Json,
+    idx?: any,
+    subNode?: boolean,
+    selected = false
+  ): void {
     Object.keys(json).forEach((key) => {
-      const prop = this.createNode1(key, json);
+      const prop = this.createNode1(key, json[key], selected);
       // If index is present, insert at index
       // Or push at the end
 
       if (subNode) {
         this[idx].type = "object";
         this[idx].isObject = true;
+        this[idx].selected = selected;
         this[idx].value = new JsonArray(
           json,
           this,

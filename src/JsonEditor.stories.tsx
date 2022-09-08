@@ -21,16 +21,7 @@ export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {
   data: {
-    parent: {
-      child: 123,
-      child1: 123,
-      child2: {
-        child2_child_1: {
-          child2_child_1_child1: 123,
-          child2_child_1_child2: 123,
-        },
-      },
-    },
+    hi: 123,
   },
   hasSelection: true,
   onChange: (data) => {
