@@ -69,6 +69,10 @@ export class JsonEditor extends React.Component<Props, State> {
         ],
       },
     ];
+    // const jArray = JsonArray.transformTree(
+    //   treeData as Array<TreeData>,
+    //   new JsonArray({}, undefined, undefined, this.setState.bind(this))
+    // );
     const jArray = new JsonArray(
       this.props.data,
       undefined,
