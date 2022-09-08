@@ -2,7 +2,7 @@
 // The Tree component that calls itself until its
 // exhausted of objects in the tree
 // Can be optimized and refactored a bit
-import React, { useState } from "react";
+import React from "react";
 import { JsonArray } from "./JsonArrayClass";
 
 interface Props {
@@ -35,7 +35,7 @@ export const Tree = ({ data, ...props }: Props) => {
                 <span
                   className="plus"
                   onClick={(e) => {
-                    data.addSubNode(idx);
+                    data.addSubNode(idx, data[idx].selected);
                   }}
                 >
                   {"➕"}

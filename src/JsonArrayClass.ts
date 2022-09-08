@@ -58,6 +58,32 @@ export class JsonArray extends Array {
     }, {});
   }
 
+  static transformTree(tree: Array<TreeData>, jArray: JsonArray) {
+    // debugger;
+    tree.forEach((treeItem: TreeData, idx) => {
+      jArray.addNode(
+        idx,
+        {
+          [treeItem.key]: DEFAULT_VALUES[treeItem.data_type],
+        },
+        treeItem.selected
+      );
+      if (treeItem.sub_object.length) {
+        const subNode = jArray.addSubNode(0, false, true);
+        JsonArray.transformTree(treeItem.sub_object, subNode);
+      }
+    });
+    return jArray;
+  }
+
+  protected static getType(obj: Json) {
+    return !!obj && obj.constructor === Array
+      ? "array"
+      : typeof obj === "object"
+      ? "object"
+      : undefined;
+  }
+
   // Inserts a node at the given index
   addNode(idx: number, json: Json, selected: boolean) {
     this._updateArray(json, idx, undefined, selected);
@@ -138,39 +164,7 @@ export class JsonArray extends Array {
     return this;
   }
 
-  // Factory method that creates a node
-  // #private method
-  _createNode(key: string, json: Json) {
-    const isObject = typeof json[key] === "object";
-    const xPath = `${this.path}[${this.length}]`;
-    const level = (xPath.match(/value/g) || []).length;
-    return {
-      key,
-      level,
-      type: typeof json[key],
-      path: xPath,
-      value: isObject
-        ? // Recursion if object
-          new JsonArray(
-            json[key],
-            this.parent,
-            xPath + ".value",
-            this.updateTree,
-            this.mode
-          )
-        : json[key],
-    };
-  }
-
-  protected static getType(obj: Json) {
-    return !!obj && obj.constructor === Array
-      ? "array"
-      : typeof obj === "object"
-      ? "object"
-      : undefined;
-  }
-
-  protected createNode1(key: string, value: any, selected: boolean) {
+  protected createNode(key: string, value: any, selected: boolean) {
     const isObject = JsonArray.getType(value);
     const xPath = `${this.path}[${this.length}]`;
     const level = (xPath.match(/value/g) || []).length;
@@ -209,24 +203,6 @@ export class JsonArray extends Array {
     };
   }
 
-  static transformTree(tree: Array<TreeData>, jArray: JsonArray) {
-    // debugger;
-    tree.forEach((treeItem: TreeData, idx) => {
-      jArray.addNode(
-        idx,
-        {
-          [treeItem.key]: DEFAULT_VALUES[treeItem.data_type],
-        },
-        treeItem.selected
-      );
-      if (treeItem.sub_object.length) {
-        const subNode = jArray.addSubNode(0, false, true);
-        JsonArray.transformTree(treeItem.sub_object, subNode);
-      }
-    });
-    return jArray;
-  }
-
   // Internal method that is used to update the array based on the propd
   // #private method
   _updateArray(
@@ -236,7 +212,7 @@ export class JsonArray extends Array {
     selected = false
   ): void {
     Object.keys(json).forEach((key) => {
-      const prop = this.createNode1(key, json[key], selected);
+      const prop = this.createNode(key, json[key], selected);
       // If index is present, insert at index
       // Or push at the end
 
@@ -251,6 +227,8 @@ export class JsonArray extends Array {
           this.updateTree,
           this.mode
         );
+        // Select the newly added subnode
+        this[idx].value[0].selected = selected;
       } else if (idx) this.splice(idx, 0, prop);
       else this.push(prop);
     });
