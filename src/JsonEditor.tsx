@@ -19,56 +19,56 @@ interface Props {
 export class JsonEditor extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    // We require state for refreshing the component on data update
-    const treeData = [
-      {
-        key: "contact",
-        data_type: "object",
-        selected: false,
-        sub_object: [
-          {
-            key: "id",
-            data_type: "object",
-            selected: false,
-            sub_object: [
-              {
-                key: "new_id",
-                data_type: "number",
-                selected: false,
-                sub_object: [],
-              },
-            ],
-          },
-          {
-            key: "new_id3123",
-            data_type: "object",
-            selected: false,
-            sub_object: [
-              {
-                key: "new_id_sam",
-                data_type: "object",
-                selected: false,
-                sub_object: [
-                  {
-                    key: "new_id3123",
-                    data_type: "object",
-                    selected: false,
-                    sub_object: [
-                      {
-                        key: "new_id_sam",
-                        data_type: "number",
-                        selected: false,
-                        sub_object: [],
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ];
+    // This is required example data
+    // const treeData = [
+    //   {
+    //     key: "contact",
+    //     data_type: "object",
+    //     selected: false,
+    //     sub_object: [
+    //       {
+    //         key: "id",
+    //         data_type: "object",
+    //         selected: false,
+    //         sub_object: [
+    //           {
+    //             key: "new_id",
+    //             data_type: "number",
+    //             selected: false,
+    //             sub_object: [],
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         key: "new_id3123",
+    //         data_type: "object",
+    //         selected: false,
+    //         sub_object: [
+    //           {
+    //             key: "new_id_sam",
+    //             data_type: "object",
+    //             selected: false,
+    //             sub_object: [
+    //               {
+    //                 key: "new_id3123",
+    //                 data_type: "object",
+    //                 selected: false,
+    //                 sub_object: [
+    //                   {
+    //                     key: "new_id_sam",
+    //                     data_type: "number",
+    //                     selected: false,
+    //                     sub_object: [],
+    //                   },
+    //                 ],
+    //               },
+    //             ],
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    // ];
     // const jArray = JsonArray.transformTree(
     //   treeData as Array<TreeData>,
     //   new JsonArray({}, undefined, undefined, this.setState.bind(this))
@@ -79,6 +79,7 @@ export class JsonEditor extends React.Component<Props, State> {
       undefined,
       this.setState.bind(this)
     );
+    // We require state for refreshing the component on data update
     this.state = {
       value: jArray,
     };
