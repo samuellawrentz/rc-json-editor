@@ -28,3 +28,14 @@ export interface JsonArrayItem {
   parent: Array<JsonArrayItem>;
   level: number;
 }
+
+export interface ArrayItem {
+  key: string;
+  response_value: string;
+  path: string;
+  selected: boolean;
+  display_format: string;
+  parent: ArrayItem;
+  level: number;
+  sub_object: ArrayItem[];
+}

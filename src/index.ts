@@ -1,1 +1,1 @@
-export * from "./JsonEditor";
+export * from "./v2/JsonSchemaEditor";

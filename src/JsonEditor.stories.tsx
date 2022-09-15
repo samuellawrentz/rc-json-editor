@@ -28,14 +28,3 @@ Default.args = {
     // console.log(data);
   },
 };
-
-// {
-//   order: {
-//     id: "order_124831sf23j123",
-//     price: 70000,
-//     isSuccess: true,
-//     details: {
-//       transact: false,
-//     },
-//   },
-// }
