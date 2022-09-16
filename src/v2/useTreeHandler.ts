@@ -1,10 +1,10 @@
 import React, { useCallback, useContext } from "react";
-import { DataTypes, Json } from "../interfaces";
-import { EContext } from "./JsonSchemaEditor";
+import { ArrayItem, DataTypes, Json } from "../interfaces";
+import { TreeContext } from "./TreeContext";
 import { TreeUtils } from "./TreeUtils";
 
 export const useTreeHandler = () => {
-  const { stateUpdater, mainDataRef } = useContext(EContext);
+  const { stateUpdater, mainDataRef } = useContext(TreeContext);
 
   const wrapper = useCallback((fn: any) => useCallback(fn, []), []);
 
@@ -63,10 +63,21 @@ export const useTreeHandler = () => {
     stateUpdater([...mainDataRef.current]);
   });
 
-  return { updateSelection, updateNodeType, removeNode, addSubItem };
+  const updateKey = wrapper((item: ArrayItem, key: string) => {
+    updateNode(item, { key });
+  });
 
-  // const updateNode = (item: Json, changes: Json) => {
-  //   item = Object.assign(item, changes);
-  //   stateUpdater([...mainDataRef.current]);
-  // };
+  const updateNode = wrapper((item: Json, changes: Json) => {
+    item = Object.assign(item, changes);
+    stateUpdater([...mainDataRef.current]);
+  });
+
+  return {
+    updateSelection,
+    updateNodeType,
+    removeNode,
+    addSubItem,
+    addItem,
+    updateKey,
+  };
 };

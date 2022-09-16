@@ -9,6 +9,7 @@ interface Props {
   addSubItem: (dataRef: ArrayItem[], idx: number) => void;
   updateNodeType: (dataRef: ArrayItem, value: string) => void;
   removeNode: (dataRef: ArrayItem[], idx: number) => void;
+  updateKey: (item: ArrayItem, key: string) => void;
 }
 
 function DefaultItemComponent({
@@ -19,6 +20,7 @@ function DefaultItemComponent({
   addSubItem,
   updateNodeType,
   removeNode,
+  updateKey,
 }: Props) {
   return (
     <>
@@ -36,7 +38,10 @@ function DefaultItemComponent({
         +
       </div>
       <div className="key">
-        <input defaultValue={item.key} />
+        <input
+          value={item.key}
+          onChange={(e) => updateKey(item, e.target.value)}
+        />
       </div>
       <div className="type">
         <select

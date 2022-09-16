@@ -1,22 +1,22 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import JsonSchemaEditor from "./JsonSchemaEditor";
+import { JsonEditor } from "./JsonEditor";
 
 export default {
   title: "V2",
-  component: JsonSchemaEditor,
+  component: JsonEditor,
   argTypes: {
     backgroundColor: { control: "color" },
   },
-} as ComponentMeta<typeof JsonSchemaEditor>;
+} as ComponentMeta<typeof JsonEditor>;
 
-const Template: ComponentStory<typeof JsonSchemaEditor> = (args) => (
-  <JsonSchemaEditor {...args} />
+const Template: ComponentStory<typeof JsonEditor> = (args) => (
+  <JsonEditor {...args} />
 );
 const data = {
   order: {
     id: "order_124831sf23j123",
-    price: 70000,
+    price: 700010,
     isSuccess: true,
     details: [{ transact: true }, { hola: "amigo" }],
   },

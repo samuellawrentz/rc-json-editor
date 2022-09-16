@@ -83,12 +83,12 @@ export abstract class TreeUtils {
 
   static generateNewNode(parent: Json | undefined) {
     return {
-      key: `key${parent?.sub_object.length}`,
+      key: `key${parent?.sub_object.length || 0}`,
       response_value: "",
       display_format: "string",
       sub_object: [],
       path: parent?.path + ".key",
-      level: parent?.level + 1,
+      level: parent?.level === undefined ? 0 : parent?.level + 1,
       parent,
     };
   }

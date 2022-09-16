@@ -1,58 +1,63 @@
 
-  input, select {
-    height: 24px;
-    margin: 0;
-    font-size: 16px;
-    padding: 0 4px;
-  }
+  .schema-editor {
+    &.default {
+        input, select {
+            height: 24px;
+            margin: 0;
+            font-size: 16px;
+            padding: 0 4px;
+          }
+              
+      .add {
+        border: 1px solid;
+        width: 24px;
+        height: 24px;
+        display: grid;
+        place-items: center;
+      }
+      .remove, .add {
+        cursor: pointer;
+      }
+    }
 
-  .object {
-    flex-basis: 100%;
-    .object {
-        margin-left: 32px;
+    
+      .object {
+        flex-basis: 100%;
+        .object {
+            margin-left: 32px;
+            .item {
+                &::before {
+                content: '';
+                position: absolute;
+                display: block;
+                height: calc(100% + 16px);
+                top: 0px;
+                left: 8px;
+                width: 1px;
+                background-color: #000;
+            }
+            &:after {
+                position: absolute;
+                display: block;
+                content: '';
+                width: 16px;
+                height: 1px;
+                background-color: #000;
+                top: 16px;
+                left: 8px;
+            }
+             &:last-child:before {
+                height: 16px;
+            }
+            }
+        }
         .item {
-            &::before {
-            content: '';
-            position: absolute;
-            display: block;
-            height: calc(100% + 16px);
-            top: 0px;
-            left: 8px;
-            width: 1px;
-            background-color: #000;
+            margin-top: 16px;
+            position: relative;
+            display: flex;
+            column-gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
         }
-        &:after {
-            position: absolute;
-            display: block;
-            content: '';
-            width: 16px;
-            height: 1px;
-            background-color: #000;
-            top: 16px;
-            left: 8px;
-        }
-         &:last-child:before {
-            height: 16px;
-        }
-        }
-    }
-    .item {
-        margin-top: 16px;
-        position: relative;
-        display: flex;
-        column-gap: 16px;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-  }
-
-  .add {
-    border: 1px solid;
-    width: 24px;
-    height: 24px;
-    display: grid;
-    place-items: center;
-  }
-  .remove, .add {
-    cursor: pointer;
+      }
   }
