@@ -22,6 +22,7 @@ export const JsonTree = ({ data, dataRef, ItemComponent }: JsonEditorProps) => {
     addSubItem,
     addItem,
     updateKey,
+    updateValue,
   } = useTreeHandler();
 
   return (
@@ -34,6 +35,7 @@ export const JsonTree = ({ data, dataRef, ItemComponent }: JsonEditorProps) => {
           updateKey,
           addSubItem,
           addItem,
+          updateValue,
           item,
           dataRef,
           idx,

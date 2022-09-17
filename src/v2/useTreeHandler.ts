@@ -10,7 +10,7 @@ export const useTreeHandler = () => {
 
   const addItem = wrapper(
     (dataRef: Json[] | undefined, parent: Json | undefined) => {
-      dataRef?.push(TreeUtils.generateNewNode(parent));
+      dataRef?.push(TreeUtils.generateNewNode(parent, dataRef.length));
       stateUpdater([...mainDataRef.current]);
     }
   );
@@ -19,6 +19,7 @@ export const useTreeHandler = () => {
     if (!dataRef) return;
     if (dataRef[idx].display_format !== DataTypes.array)
       dataRef[idx].display_format = DataTypes.object;
+    dataRef[idx].response_value = "";
     const subObject = dataRef[idx].sub_object;
     addItem(subObject, dataRef[idx]);
   });
@@ -67,6 +68,10 @@ export const useTreeHandler = () => {
     updateNode(item, { key });
   });
 
+  const updateValue = wrapper((item: ArrayItem, value: string) => {
+    updateNode(item, { response_value: value });
+  });
+
   const updateNode = wrapper((item: Json, changes: Json) => {
     item = Object.assign(item, changes);
     stateUpdater([...mainDataRef.current]);
@@ -79,5 +84,6 @@ export const useTreeHandler = () => {
     addSubItem,
     addItem,
     updateKey,
+    updateValue,
   };
 };

@@ -10,6 +10,7 @@ interface Props {
   updateNodeType: (dataRef: ArrayItem, value: string) => void;
   removeNode: (dataRef: ArrayItem[], idx: number) => void;
   updateKey: (item: ArrayItem, key: string) => void;
+  updateValue?: (item: ArrayItem, response_value: string) => void;
 }
 
 function DefaultItemComponent({
