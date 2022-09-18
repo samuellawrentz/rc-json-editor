@@ -2,7 +2,7 @@ import React, {
   forwardRef,
   useEffect,
   useImperativeHandle,
-  useRef,
+  useMemo,
   useState,
 } from "react";
 import { ArrayItem, Json } from "../interfaces";
@@ -11,44 +11,47 @@ import JsonTree from "./Tree";
 import { TreeContext } from "./TreeContext";
 
 export const JsonEditor = forwardRef(function JsonEditor(
-  { data, ItemComponent }: Json,
+  { data, ItemComponent, fromTree }: Json,
   ref
 ) {
   if (!data) return null;
-  const [treeData, setTreeData] = useState(
-    TreeUtils.convertJSONtoTree(data, undefined)
-  );
-  const mainDataRef = useRef(treeData);
+  const [treeData, setTreeData] = useState([] as Json[]);
 
+  // Update the tree on props change
   useEffect(() => {
-    const newData = TreeUtils.convertJSONtoTree(data, undefined);
+    const newData = fromTree
+      ? TreeUtils.transformTree(data, undefined)
+      : TreeUtils.convertJSONtoTree(data, undefined);
     setTreeData(newData);
-    mainDataRef.current = newData;
   }, [data]);
 
+  // Expose certain methods via ref
   useImperativeHandle(
     ref,
     () => ({
-      getJson: () => TreeUtils.convertTreetoJSON(mainDataRef.current),
-      getTree: () => mainDataRef.current,
+      getJson: () => TreeUtils.convertTreetoJSON(treeData),
+      getTree: () => treeData,
     }),
     []
   );
 
-  if (!treeData) return null;
+  // Props for the context is preserved on every render
+  const contextProps = useMemo(
+    () => ({
+      stateUpdater: (data: ArrayItem[]) => setTreeData(data),
+      treeData,
+    }),
+    [treeData]
+  );
+
+  if (!treeData.length) return null;
 
   return (
-    <TreeContext.Provider
-      value={{
-        stateUpdater: setTreeData,
-        mainDataRef,
-      }}
-    >
+    <TreeContext.Provider value={contextProps}>
       <div className={`schema-editor ${ItemComponent ? "custom" : "default"}`}>
         <form noValidate>
           <JsonTree
             data={treeData as ArrayItem[]}
-            dataRef={mainDataRef.current as ArrayItem[]}
             ItemComponent={ItemComponent}
           />
         </form>

@@ -95,6 +95,7 @@ export abstract class TreeUtils {
       parent,
     };
   }
+
   static isAllPrimitive(array: Json[]) {
     return array.every((item) => typeof item !== DataTypes.object);
   }

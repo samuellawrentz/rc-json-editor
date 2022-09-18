@@ -14,12 +14,7 @@ const Template: ComponentStory<typeof JsonEditor> = (args) => (
   <JsonEditor {...args} />
 );
 const data = {
-  order: {
-    id: "order_124831sf23j123",
-    price: 700010,
-    isSuccess: true,
-    details: [{ transact: true }, { hola: "amigo" }],
-  },
+  order: "hi",
 };
 
 export const Default = Template.bind({});

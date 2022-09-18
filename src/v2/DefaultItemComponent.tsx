@@ -3,19 +3,19 @@ import { ArrayItem } from "../interfaces";
 
 interface Props {
   item: ArrayItem;
-  dataRef: ArrayItem[];
+  siblings: ArrayItem[];
   idx: number;
-  updateSelection: (dataRef: ArrayItem, checked: boolean) => void;
-  addSubItem: (dataRef: ArrayItem[], idx: number) => void;
-  updateNodeType: (dataRef: ArrayItem, value: string) => void;
-  removeNode: (dataRef: ArrayItem[], idx: number) => void;
+  updateSelection: (siblings: ArrayItem, checked: boolean) => void;
+  addSubItem: (siblings: ArrayItem[], idx: number) => void;
+  updateNodeType: (siblings: ArrayItem, value: string) => void;
+  removeNode: (siblings: ArrayItem[], idx: number) => void;
   updateKey: (item: ArrayItem, key: string) => void;
   updateValue?: (item: ArrayItem, response_value: string) => void;
 }
 
 function DefaultItemComponent({
   item,
-  dataRef,
+  siblings,
   idx,
   updateSelection,
   addSubItem,
@@ -32,10 +32,10 @@ function DefaultItemComponent({
         <input
           type="checkbox"
           checked={item.selected}
-          onChange={(e) => updateSelection(dataRef?.[idx], e.target.checked)}
+          onChange={(e) => updateSelection(siblings?.[idx], e.target.checked)}
         />
       </div>
-      <div className="add" onClick={() => addSubItem(dataRef, idx)}>
+      <div className="add" onClick={() => addSubItem(siblings, idx)}>
         +
       </div>
       <div className="key">
@@ -62,7 +62,7 @@ function DefaultItemComponent({
       <div
         className="remove"
         onClick={() => {
-          removeNode(dataRef, idx);
+          removeNode(siblings, idx);
         }}
       >
         ➖
