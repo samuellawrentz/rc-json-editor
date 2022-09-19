@@ -1,21 +1,18 @@
-import React, { useCallback, useContext } from "react";
+import { useCallback } from "react";
 import { ArrayItem, DataTypes, Json } from "../interfaces";
-import { TreeContext } from "./TreeContext";
 import { TreeUtils } from "./TreeUtils";
 
-export const useTreeHandler = () => {
-  const { stateUpdater, treeData } = useContext(TreeContext);
-
+export const useTreeHandler = (stateUpdater: (data: any) => void) => {
   const wrapper = useCallback((fn: any) => useCallback(fn, []), []);
 
-  const addItem = wrapper(
-    (siblingsList: Json[] | undefined, parent: Json | undefined) => {
+  const addItem = wrapper((siblingsList: Json[], parent: Json | undefined) => {
+    stateUpdater((treeData: Json[]) => {
       siblingsList?.push(
         TreeUtils.generateNewNode(parent, siblingsList.length)
       );
-      stateUpdater([...treeData]);
-    }
-  );
+      return [...treeData];
+    });
+  });
 
   const addSubItem = wrapper(
     (siblingsList: Json[] | undefined, idx: number) => {
@@ -47,25 +44,31 @@ export const useTreeHandler = () => {
 
   const updateSelection = wrapper(
     (item: Json | undefined, checked: boolean) => {
-      if (!item) return;
-      item.selected = checked;
-      if (item?.sub_object.length) selectAllChildren(item, checked);
-      checked && selectAllParent(item, true);
-      stateUpdater([...treeData]);
+      stateUpdater((treeData: Json[]) => {
+        if (!item) return treeData;
+        item.selected = checked;
+        if (item?.sub_object.length) selectAllChildren(item, checked);
+        checked && selectAllParent(item, true);
+        return [...treeData];
+      });
     }
   );
 
   const updateNodeType = wrapper((item: Json, type: string) => {
-    item.display_format = type;
-    item.sub_object = [];
-    if (type === DataTypes.object)
-      item.sub_object = [TreeUtils.generateNewNode(item)];
-    stateUpdater([...treeData]);
+    stateUpdater((treeData: Json[]) => {
+      item.display_format = type;
+      item.sub_object = [];
+      if (type === DataTypes.object)
+        item.sub_object = [TreeUtils.generateNewNode(item)];
+      return [...treeData];
+    });
   });
 
   const removeNode = wrapper((itemList: Json[] | undefined, idx: number) => {
-    itemList?.splice(idx, 1);
-    stateUpdater([...treeData]);
+    stateUpdater((treeData: Json[]) => {
+      itemList?.splice(idx, 1);
+      return [...treeData];
+    });
   });
 
   const updateKey = wrapper((item: ArrayItem, key: string) => {
@@ -77,8 +80,10 @@ export const useTreeHandler = () => {
   });
 
   const updateNode = wrapper((item: Json, changes: Json) => {
-    item = Object.assign(item, changes);
-    stateUpdater([...treeData]);
+    stateUpdater((treeData: Json[]) => {
+      item = Object.assign(item, changes);
+      return [...treeData];
+    });
   });
 
   return {
@@ -89,6 +94,5 @@ export const useTreeHandler = () => {
     addItem,
     updateKey,
     updateValue,
-    treeData,
   };
 };
