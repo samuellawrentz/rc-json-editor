@@ -27,8 +27,8 @@ export const JsonEditor = forwardRef(function JsonEditor(
   useImperativeHandle(
     ref,
     () => ({
-      getJson: () => TreeUtils.convertTreetoJSON(treeData),
-      getTree: () => treeData,
+      getJson: () => TreeUtils.convertTreetoJSON([...treeData]),
+      getTree: () => [...treeData],
     }),
     []
   );

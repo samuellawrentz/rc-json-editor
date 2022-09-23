@@ -19,29 +19,15 @@ export const JsonTree = ({
   ItemComponent,
   stateUpdater,
 }: JsonEditorProps) => {
-  const {
-    updateSelection,
-    updateNodeType,
-    removeNode,
-    addSubItem,
-    addItem,
-    updateKey,
-    updateValue,
-  } = useTreeHandler(stateUpdater);
+  const treeMethods = useTreeHandler(stateUpdater);
   return (
     <div className={`object`}>
       {data.map((item, idx: number) => {
         const rowProps = {
           siblings: data,
-          updateSelection,
-          updateNodeType,
-          removeNode,
-          updateKey,
-          addSubItem,
-          addItem,
-          updateValue,
           item,
           idx,
+          ...treeMethods,
         };
         const RowComponent = ItemComponent || DefaultItemComponent;
         return (
