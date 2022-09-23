@@ -21,14 +21,10 @@ export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {
   data: {
-    order: {
-      id: "order_124831sf23j123",
-      price: 70000,
-      isSuccess: true,
-    },
+    hi: 123,
   },
   hasSelection: true,
   onChange: (data) => {
-    console.log(data);
+    // console.log(data);
   },
 };

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Json } from "./interfaces";
+import React from "react";
+import { Json, TreeData } from "./interfaces";
 import { JsonArray } from "./JsonArrayClass";
 import { Tree } from "./Tree";
 import "./style.scss";
@@ -19,8 +19,70 @@ interface Props {
 export class JsonEditor extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    // This is required example data
+    // const treeData = [
+    //   {
+    //     key: "contact",
+    //     data_type: "object",
+    //     selected: false,
+    //     sub_object: [
+    //       {
+    //         key: "id",
+    //         data_type: "object",
+    //         selected: false,
+    //         sub_object: [
+    //           {
+    //             key: "new_id",
+    //             data_type: "number",
+    //             selected: false,
+    //             sub_object: [],
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         key: "new_id3123",
+    //         data_type: "object",
+    //         selected: false,
+    //         sub_object: [
+    //           {
+    //             key: "new_id_sam",
+    //             data_type: "object",
+    //             selected: false,
+    //             sub_object: [
+    //               {
+    //                 key: "new_id3123",
+    //                 data_type: "object",
+    //                 selected: false,
+    //                 sub_object: [
+    //                   {
+    //                     key: "new_id_sam",
+    //                     data_type: "number",
+    //                     selected: false,
+    //                     sub_object: [],
+    //                   },
+    //                 ],
+    //               },
+    //             ],
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    // ];
+    // const jArray = JsonArray.transformTree(
+    //   treeData as Array<TreeData>,
+    //   new JsonArray({}, undefined, undefined, this.setState.bind(this))
+    // );
+    const jArray = new JsonArray(
+      this.props.data,
+      undefined,
+      undefined,
+      this.setState.bind(this)
+    );
     // We require state for refreshing the component on data update
-    this.state = { value: new JsonArray() };
+    this.state = {
+      value: jArray,
+    };
   }
   componentDidUpdate(_: Props, pState: State) {
     if (this.state !== pState) this.props.onChange?.(this.state.value);
@@ -32,9 +94,7 @@ export class JsonEditor extends React.Component<Props, State> {
           this.props.hasSelection ? "has-selection" : ""
         }`}
       >
-        <Tree
-          data={new JsonArray(this.props.data, "", this.setState.bind(this))}
-        />
+        <Tree data={this.state.value} />
       </div>
     );
   }
