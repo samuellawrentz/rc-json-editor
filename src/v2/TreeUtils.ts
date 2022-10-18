@@ -34,13 +34,13 @@ export abstract class TreeUtils {
           return this;
         },
         key: item,
-        path,
+        response_key: path,
         parent,
         parentIndex,
         level,
         response_value,
         selected: false,
-        display_format: type,
+        data_type: type,
         sub_object: [] as Json[],
       }.setSubObject();
     });
@@ -53,7 +53,7 @@ export abstract class TreeUtils {
         // Recursion
         const value = this.convertTreetoJSON(treeItem.sub_object);
         json[treeItem.key] =
-          treeItem.display_format === DataTypes.array ? [value] : value;
+          treeItem.data_type === DataTypes.array ? [value] : value;
       }
       return json;
     }, {});
@@ -81,6 +81,22 @@ export abstract class TreeUtils {
     });
   };
 
+  static cleanTree = (tree: Json[]): Json[] => {
+    return tree.map((item) => {
+      item.parent =
+        item.path =
+        item.level =
+        item.parentIndex =
+        item.response_value =
+          undefined;
+      item.key = item.key;
+      // Recursion
+      if (item.sub_object?.length)
+        item.sub_object = TreeUtils.cleanTree(item.sub_object);
+      return item;
+    });
+  };
+
   static generateNewNode(
     parent: Json | undefined,
     length?: number | undefined
@@ -88,7 +104,7 @@ export abstract class TreeUtils {
     return {
       key: `key${parent?.sub_object.length || length || 0}`,
       response_value: "value",
-      display_format: "string",
+      data_type: "string",
       sub_object: [],
       path: parent?.path + ".key",
       level: parent?.level === undefined ? 0 : parent?.level + 1,

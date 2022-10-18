@@ -34,11 +34,13 @@ export const JsonTree = ({
           <React.Fragment key={idx}>
             <div
               key={idx}
-              className={`item ${item.sub_object.length ? "has-children" : ""}`}
+              className={`item ${
+                item.sub_object?.length ? "has-children" : ""
+              }`}
             >
               <RowComponent {...rowProps} />
 
-              {!!item.sub_object.length && (
+              {!!item.sub_object?.length && (
                 <JsonTree
                   data={item.sub_object}
                   ItemComponent={ItemComponent}

@@ -35,6 +35,7 @@ export interface ArrayItem {
   path: string;
   selected: boolean;
   display_format: string;
+  data_type?: string;
   parent: ArrayItem;
   level: number;
   sub_object: ArrayItem[];

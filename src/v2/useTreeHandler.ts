@@ -17,8 +17,8 @@ export const useTreeHandler = (stateUpdater: (data: any) => void) => {
   const addSubItem = wrapper(
     (siblingsList: Json[] | undefined, idx: number) => {
       if (!siblingsList) return;
-      if (siblingsList[idx].display_format !== DataTypes.array)
-        siblingsList[idx].display_format = DataTypes.object;
+      if (siblingsList[idx].data_type !== DataTypes.array)
+        siblingsList[idx].data_type = DataTypes.object;
       siblingsList[idx].response_value = "";
       const subObject = siblingsList[idx].sub_object;
       addItem(subObject, siblingsList[idx]);
@@ -56,7 +56,7 @@ export const useTreeHandler = (stateUpdater: (data: any) => void) => {
 
   const updateNodeType = wrapper((item: Json, type: string) => {
     stateUpdater((treeData: Json[]) => {
-      item.display_format = type;
+      item.data_type = type;
       item.sub_object = [];
       if (type === DataTypes.object)
         item.sub_object = [TreeUtils.generateNewNode(item)];

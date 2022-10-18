@@ -46,7 +46,7 @@ function DefaultItemComponent({
       </div>
       <div className="type">
         <select
-          value={item.display_format}
+          value={item.data_type}
           style={{ width: 180 }}
           onChange={(e) => {
             updateNodeType(item, e.target.value);
