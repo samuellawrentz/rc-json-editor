@@ -1,4 +1,5 @@
-import { DataTypes, Json } from "../interfaces";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { DataTypes, DefaultValues, Json } from "../interfaces";
 
 export abstract class TreeUtils {
   static convertJSONtoTree(
@@ -12,13 +13,11 @@ export abstract class TreeUtils {
       const value = json[item];
       const type = TreeUtils.getType(value);
       const isList = Array.isArray(value);
-      const isObject = type === DataTypes.object || type === DataTypes.array;
+      const isObject = type === DataTypes.object || type === DataTypes.list;
       const path = `${parentKey ? `${parentKey}.` : ""}${item}`;
+      const isAllPrimitive = isList && !TreeUtils.isAllPrimitive(value);
       const response_value =
-        type === DataTypes.object ||
-        (isList && !TreeUtils.isAllPrimitive(value))
-          ? ""
-          : value;
+        type === DataTypes.object || isAllPrimitive ? "" : value;
       return {
         setSubObject: function () {
           this.sub_object = isObject
@@ -46,18 +45,23 @@ export abstract class TreeUtils {
     });
   }
 
-  static convertTreetoJSON(tree: Json[]): Json {
+  // Util method to get JSON from the tree/attribute data
+  static convertTreetoJSON = (tree: Json[]): Json => {
     return tree.reduce((json, treeItem) => {
-      json[treeItem.key] = treeItem.response_value;
-      if (treeItem.sub_object.length) {
+      const key = treeItem.key ?? treeItem.response_key.match(/\w+$/g)?.[0];
+      //@ts-ignore
+      json[key] = treeItem.response_value || DefaultValues[treeItem.data_type];
+      if (treeItem?.sub_object?.length) {
         // Recursion
-        const value = this.convertTreetoJSON(treeItem.sub_object);
-        json[treeItem.key] =
-          treeItem.data_type === DataTypes.array ? [value] : value;
+        let value;
+        if (treeItem.data_type === DataTypes.list)
+          value = [TreeUtils.convertTreetoJSON(treeItem.sub_object)];
+        else value = TreeUtils.convertTreetoJSON(treeItem.sub_object);
+        json[key] = value;
       }
       return json;
     }, {});
-  }
+  };
 
   static transformTree = (
     tree: Json[],
@@ -81,7 +85,7 @@ export abstract class TreeUtils {
     });
   };
 
-  static cleanTree = (tree: Json[]): Json[] => {
+  static cleanTree = (tree: Json[], removeResponseKey = true): Json[] => {
     return tree.map((item) => {
       item.parent =
         item.path =
@@ -89,10 +93,13 @@ export abstract class TreeUtils {
         item.parentIndex =
         item.response_value =
           undefined;
-      item.key = item.key;
+      if (removeResponseKey) item.response_key = undefined;
       // Recursion
       if (item.sub_object?.length)
-        item.sub_object = TreeUtils.cleanTree(item.sub_object);
+        item.sub_object = TreeUtils.cleanTree(
+          item.sub_object,
+          removeResponseKey
+        );
       return item;
     });
   };
@@ -116,9 +123,18 @@ export abstract class TreeUtils {
     return array.every((item) => typeof item !== DataTypes.object);
   }
 
+  static getPrimitiveArrayType(arr: any[]) {
+    if (!arr.length) return DataTypes.list;
+    if (typeof arr[0] === "boolean") return DataTypes.listOfBooleans;
+    if (typeof arr[0] === "string") return DataTypes.listOfStrings;
+    if (typeof arr[0] === "number") return DataTypes.listOfNumbers;
+  }
+
   static getType(obj: Json) {
     return Array.isArray(obj)
-      ? DataTypes.array
+      ? TreeUtils.isAllPrimitive(obj)
+        ? this.getPrimitiveArrayType(obj)
+        : DataTypes.list
       : typeof obj === DataTypes.object
       ? DataTypes.object
       : typeof obj;

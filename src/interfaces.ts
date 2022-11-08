@@ -6,9 +6,23 @@ export enum DataTypes {
   string = "string",
   number = "number",
   boolean = "boolean",
-  array = "array",
+  list = "list",
   object = "object",
+  listOfStrings = "list of strings",
+  listOfNumbers = "list of numbers",
+  listOfBooleans = "list of booleans",
 }
+
+export const DefaultValues = {
+  string: "",
+  number: 0,
+  boolean: true,
+  list: [],
+  listOfStrings: ["string"],
+  listOfNumbers: [0],
+  listOfBooleans: [true],
+  object: {},
+};
 
 export interface TreeData {
   key: string;
@@ -27,6 +41,14 @@ export interface JsonArrayItem {
   type: string;
   parent: Array<JsonArrayItem>;
   level: number;
+}
+export interface TreeMethods {
+  updateSelection: (siblings: ArrayItem, checked: boolean) => void;
+  addSubItem: (siblings: ArrayItem[], idx: number) => void;
+  updateNodeType: (siblings: ArrayItem, value: string) => void;
+  removeNode: (siblings: ArrayItem[], idx: number) => void;
+  updateKey: (item: ArrayItem, key: string) => void;
+  updateValue?: (item: ArrayItem, response_value: string) => void;
 }
 
 export interface ArrayItem {

@@ -46,7 +46,7 @@ export class JsonArray extends Array {
     return treeData?.reduce((acc, data) => {
       if (data.type === DataTypes.object)
         acc[data.key] = JsonArray.convertToJSON(data.value);
-      else if (data.type === DataTypes.array) {
+      else if (data.type === DataTypes.list) {
         acc[data.key] = data.value.length
           ? [JsonArray.convertToJSON(data.value)]
           : [];
@@ -82,7 +82,7 @@ export class JsonArray extends Array {
 
   protected static getType(obj: Json) {
     return !!obj && obj.constructor === Array
-      ? DataTypes.array
+      ? DataTypes.list
       : typeof obj === DataTypes.object
       ? DataTypes.object
       : undefined;
@@ -99,7 +99,7 @@ export class JsonArray extends Array {
   public addSubNode(idx: number, selected: boolean, isEmpty = false) {
     if (
       this[idx].type === DataTypes.object ||
-      this[idx].type === DataTypes.array
+      this[idx].type === DataTypes.list
     ) {
       const data = isEmpty
         ? {}
@@ -160,7 +160,7 @@ export class JsonArray extends Array {
     this[index].type = toType;
     this[index].value = DEFAULT_VALUES[toType];
     this[index].isObject = false;
-    if (toType === DataTypes.object || toType === DataTypes.array) {
+    if (toType === DataTypes.object || toType === DataTypes.list) {
       this[index].isObject = true;
       this[index].value = new JsonArray(
         this[index].value,
@@ -177,7 +177,7 @@ export class JsonArray extends Array {
     const isObject = JsonArray.getType(value);
     const xPath = `${this.path}[${this.length}]`;
     const level = (xPath.match(/value/g) || []).length;
-    if (isObject === DataTypes.array) {
+    if (isObject === DataTypes.list) {
       const arrayObject = value.reduce((acc: Json, curr: Json) => {
         if (JsonArray.getType(curr))
           Object.keys(curr).forEach((objKey) => (acc[objKey] = curr[objKey]));

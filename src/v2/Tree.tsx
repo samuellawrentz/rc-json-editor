@@ -3,7 +3,7 @@
 // exhausted of objects in the tree
 // Can be optimized and refactored a bit
 import React from "react";
-import { ArrayItem, Json } from "../interfaces";
+import { ArrayItem, Json, TreeMethods } from "../interfaces";
 import DefaultItemComponent from "./DefaultItemComponent";
 import "./style.scss";
 import { useTreeHandler } from "./useTreeHandler";
@@ -12,14 +12,15 @@ interface JsonEditorProps {
   data: ArrayItem[];
   ItemComponent?: React.ComponentType<any>;
   stateUpdater: (data: Json[]) => void;
+  treeMethods: TreeMethods;
 }
 
 export const JsonTree = ({
   data,
   ItemComponent,
   stateUpdater,
+  treeMethods,
 }: JsonEditorProps) => {
-  const treeMethods = useTreeHandler(stateUpdater);
   return (
     <div className={`object`}>
       {data.map((item, idx: number) => {
@@ -45,6 +46,7 @@ export const JsonTree = ({
                   data={item.sub_object}
                   ItemComponent={ItemComponent}
                   stateUpdater={stateUpdater}
+                  treeMethods={treeMethods}
                 />
               )}
             </div>

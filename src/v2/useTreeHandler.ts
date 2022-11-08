@@ -17,7 +17,7 @@ export const useTreeHandler = (stateUpdater: (data: any) => void) => {
   const addSubItem = wrapper(
     (siblingsList: Json[] | undefined, idx: number) => {
       if (!siblingsList) return;
-      if (siblingsList[idx].data_type !== DataTypes.array)
+      if (siblingsList[idx].data_type !== DataTypes.list)
         siblingsList[idx].data_type = DataTypes.object;
       siblingsList[idx].response_value = "";
       const subObject = siblingsList[idx].sub_object;
@@ -41,6 +41,16 @@ export const useTreeHandler = (stateUpdater: (data: any) => void) => {
       item.parent.selected = checked;
     }
   );
+
+  const selectAll = wrapper((checked: boolean) => {
+    stateUpdater((treeData: Json[]) => {
+      treeData.forEach((item) => {
+        item.selected = checked;
+        if (item?.sub_object?.length) selectAllChildren(item, checked);
+      });
+      return [...treeData];
+    });
+  });
 
   const updateSelection = wrapper(
     (item: Json | undefined, checked: boolean) => {
@@ -94,5 +104,6 @@ export const useTreeHandler = (stateUpdater: (data: any) => void) => {
     addItem,
     updateKey,
     updateValue,
+    selectAll,
   };
 };
