@@ -9,6 +9,7 @@ export abstract class TreeUtils {
     level = 0,
     parentIndex = 0
   ): Json[] {
+    if (!json) return json;
     return Object.keys(json).map((item, idx) => {
       const value = json[item];
       const type = TreeUtils.getType(value);
@@ -85,20 +86,25 @@ export abstract class TreeUtils {
     });
   };
 
-  static cleanTree = (tree: Json[], removeResponseKey = true): Json[] => {
+  static cleanTree = (
+    tree: Json[],
+    removeResponseKey = true,
+    isRequestBody = false
+  ): Json[] => {
     return tree.map((item) => {
-      item.parent =
-        item.path =
-        item.level =
-        item.parentIndex =
-        item.response_value =
-          undefined;
+      item.parent = item.path = item.level = item.parentIndex = undefined;
       if (removeResponseKey) item.response_key = undefined;
+      if (isRequestBody) {
+        item.selected = undefined;
+        item.value = item?.response_value;
+      }
+      item.response_value = undefined;
       // Recursion
       if (item.sub_object?.length)
         item.sub_object = TreeUtils.cleanTree(
           item.sub_object,
-          removeResponseKey
+          removeResponseKey,
+          isRequestBody
         );
       return item;
     });

@@ -16,12 +16,35 @@ const Template: ComponentStory<typeof JsonEditor> = (args) => (
   <JsonEditor {...args} />
 );
 const data = {
-  order: [
+  results: [
     {
-      order_number: 123,
+      active: false,
+      address: "India - 560005",
+      company_id: null,
+      created_at: "2022-11-03T18:15:49Z",
+      custom_fields: {},
+      description: "Test Contact in Perfectfit organization",
+      email: "terry.adams@perfectfit.com",
+      external_id: null,
+      facebook_id: null,
+      id: 17050959320,
+      job_title: null,
+      language: "en",
+      mobile: "",
+      name: "Terry Adams",
+      other_emails: [],
+      phone: "+919880465079",
+      time_zone: "Mumbai",
+      twitter_id: null,
+      updated_at: "2022-11-03T18:15:49Z",
     },
   ],
+  total: 1,
 };
+
+console.log(
+  TreeUtils.cleanTree(TreeUtils.convertJSONtoTree(data, undefined), true, true)
+);
 
 export const Default = Template.bind({});
 Default.args = {
