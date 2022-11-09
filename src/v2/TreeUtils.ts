@@ -9,7 +9,6 @@ export abstract class TreeUtils {
     level = 0,
     parentIndex = 0
   ): Json[] {
-    if (!json) return [];
     return Object.keys(json).map((item, idx) => {
       const value = json[item];
       const type = TreeUtils.getType(value);
@@ -137,6 +136,7 @@ export abstract class TreeUtils {
   }
 
   static getType(obj: Json) {
+    if (!obj) return undefined;
     return Array.isArray(obj)
       ? TreeUtils.isAllPrimitive(obj)
         ? this.getPrimitiveArrayType(obj)
