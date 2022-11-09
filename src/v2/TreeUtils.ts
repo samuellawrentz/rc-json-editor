@@ -9,7 +9,7 @@ export abstract class TreeUtils {
     level = 0,
     parentIndex = 0
   ): Json[] {
-    if (!json) return json;
+    if (!json) return [];
     return Object.keys(json).map((item, idx) => {
       const value = json[item];
       const type = TreeUtils.getType(value);
