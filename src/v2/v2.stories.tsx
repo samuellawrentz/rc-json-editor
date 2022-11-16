@@ -16,7 +16,7 @@ const Template: ComponentStory<typeof JsonEditor> = (args) => (
   <JsonEditor {...args} />
 );
 const data = {
-  results: "",
+  results: 0,
 };
 
 console.log(TreeUtils.convertJSONtoTree(data, undefined));
