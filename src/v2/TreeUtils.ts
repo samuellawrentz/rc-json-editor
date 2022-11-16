@@ -11,6 +11,7 @@ export abstract class TreeUtils {
   ): Json[] {
     return Object.keys(json).map((item, idx) => {
       const value = json[item];
+
       const type = TreeUtils.getType(value);
       const isList = Array.isArray(value);
       const isObject = type === DataTypes.object || type === DataTypes.list;
@@ -18,6 +19,7 @@ export abstract class TreeUtils {
       const isAllPrimitive = isList && !TreeUtils.isAllPrimitive(value);
       const response_value =
         type === DataTypes.object || isAllPrimitive ? "" : value;
+
       return {
         setSubObject: function () {
           this.sub_object = isObject
@@ -136,7 +138,7 @@ export abstract class TreeUtils {
   }
 
   static getType(obj: Json) {
-    if (!obj) return undefined;
+    if (!obj && obj !== "") return undefined;
     return Array.isArray(obj)
       ? TreeUtils.isAllPrimitive(obj)
         ? this.getPrimitiveArrayType(obj)

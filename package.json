@@ -1,6 +1,6 @@
 {
   "name": "rc-json-editor",
-  "version": "2.0.14",
+  "version": "2.0.19",
   "description": "A simple JSON Editor React Component",
   "main": "build/index.js",
   "module": "build/index.es.js",
