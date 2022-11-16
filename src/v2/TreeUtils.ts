@@ -138,7 +138,7 @@ export abstract class TreeUtils {
   }
 
   static getType(obj: Json) {
-    if (!obj && obj !== "") return undefined;
+    if (obj === null || obj === undefined) return "string";
     return Array.isArray(obj)
       ? TreeUtils.isAllPrimitive(obj)
         ? this.getPrimitiveArrayType(obj)
