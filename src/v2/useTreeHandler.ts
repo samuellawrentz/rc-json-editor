@@ -8,7 +8,7 @@ export const useTreeHandler = (stateUpdater: (data: any) => void) => {
   const addItem = wrapper((siblingsList: Json[], parent: Json | undefined) => {
     stateUpdater((treeData: Json[]) => {
       siblingsList?.push(
-        TreeUtils.generateNewNode(parent, siblingsList.length)
+        TreeUtils.generateNewNode(parent, siblingsList?.length)
       );
       return [...treeData];
     });
@@ -29,7 +29,7 @@ export const useTreeHandler = (stateUpdater: (data: any) => void) => {
     (item: Json | undefined, checked: boolean) => {
       item?.sub_object.forEach((subItem: Json) => {
         subItem.selected = checked;
-        if (subItem.sub_object.length) updateSelection(subItem, checked);
+        if (subItem?.sub_object?.length) updateSelection(subItem, checked);
       });
     }
   );
@@ -37,7 +37,7 @@ export const useTreeHandler = (stateUpdater: (data: any) => void) => {
   const selectAllParent = wrapper(
     (item: Json | undefined, checked: boolean) => {
       if (!item?.parent) return;
-      if (item.parent?.parent) selectAllParent(item.parent, checked);
+      if (item.parent?.parent) selectAllParent(item?.parent, checked);
       item.parent.selected = checked;
     }
   );
@@ -57,7 +57,7 @@ export const useTreeHandler = (stateUpdater: (data: any) => void) => {
       stateUpdater((treeData: Json[]) => {
         if (!item) return treeData;
         item.selected = checked;
-        if (item?.sub_object.length) selectAllChildren(item, checked);
+        if (item?.sub_object?.length) selectAllChildren(item, checked);
         checked && selectAllParent(item, true);
         return [...treeData];
       });
