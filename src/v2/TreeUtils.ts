@@ -32,6 +32,7 @@ export abstract class TreeUtils {
                 idx
               )
             : [];
+
           return this;
         },
         key: item,
@@ -93,7 +94,12 @@ export abstract class TreeUtils {
     isRequestBody = false
   ): Json[] => {
     return tree.map((item) => {
-      item.parent = item.path = item.level = item.parentIndex = undefined;
+      item.parent =
+        item.path =
+        item.level =
+        item.parentIndex =
+        item.setSubObject =
+          undefined;
       if (removeResponseKey) item.response_key = undefined;
       if (isRequestBody) {
         item.selected = undefined;
@@ -120,7 +126,7 @@ export abstract class TreeUtils {
       response_value: "value",
       data_type: "string",
       sub_object: [],
-      path: parent?.path + ".key",
+      path: `${parent?.path ? `${parent?.path}.` : ""}key`,
       level: parent?.level === undefined ? 0 : parent?.level + 1,
       parent,
     };
