@@ -1,3 +1,17 @@
+export const treeJson = {
+  foo: "bar",
+  typeNumber: 123,
+  typeBool: true,
+  typeListOfBool: [true],
+  typeListofString: ["Hi"],
+  typeListOfNumber: [1],
+  typeList: [{ foo: "bar" }],
+  typeObj: {
+    foo: "bar",
+    hello: "world",
+  },
+};
+
 export const mockJson = {
   current_page: 1,
   items: [
@@ -566,7 +580,7 @@ export const parentJson = {
 
 export const newItemAddedResult = {
   data_type: "string",
-  key: "key0",
+  key: "",
   level: 0,
   parent: {
     data_type: "number",
@@ -582,6 +596,6 @@ export const newItemAddedResult = {
     sub_object: [],
   },
   path: "new.key",
-  response_value: "value",
+  response_value: "",
   sub_object: [],
 };

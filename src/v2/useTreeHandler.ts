@@ -7,9 +7,7 @@ export const useTreeHandler = (stateUpdater: (data: any) => void) => {
 
   const addItem = wrapper((siblingsList: Json[], parent: Json | undefined) => {
     stateUpdater((treeData: Json[]) => {
-      siblingsList?.push(
-        TreeUtils.generateNewNode(parent, siblingsList?.length)
-      );
+      siblingsList?.push(TreeUtils.generateNewNode(parent));
       return [...treeData];
     });
   });

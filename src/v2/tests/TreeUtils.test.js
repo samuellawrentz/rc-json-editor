@@ -8,7 +8,7 @@ import {
   treeToJSONResult,
 } from "./mocks/TreeOps";
 
-describe("sum module", () => {
+describe("This suite tests the Tree Utils module", () => {
   test("JSONTOTree function works properly", () => {
     expect(TreeUtils.cleanTree(TreeUtils.convertJSONtoTree(mockJson))).toEqual(
       result
