@@ -155,7 +155,7 @@ export abstract class TreeUtils {
     return value.reduce((acc: Json, curr: Json) => {
       if (TreeUtils.getType(curr) === DataTypes.object)
         Object.keys(curr).forEach((objKey) => {
-          if (curr[objKey]?.length !== 0) acc[objKey] = curr[objKey];
+          acc[objKey] = curr[objKey];
         });
       return acc;
     }, {});

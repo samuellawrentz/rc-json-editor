@@ -103,5 +103,6 @@ export const useTreeHandler = (stateUpdater: (data: any) => void) => {
     updateKey,
     updateValue,
     selectAll,
+    updateNode,
   };
 };

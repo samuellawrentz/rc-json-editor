@@ -273,6 +273,27 @@ FromTreeData.args = {
     console.log(TreeUtils.convertTreetoJSON(treeData)),
 };
 
+console.log(
+  TreeUtils.convertJSONtoTree(
+    {
+      books: [
+        {
+          author123: "",
+          description: "",
+          isbn: "",
+          pages: 0,
+          published: "",
+          publisher: "",
+          subtitle: "",
+          title: "",
+          website: "",
+        },
+      ],
+    },
+    undefined
+  )
+);
+
 // {
 //   order: {
 //     id: "order_124831sf23j123",
