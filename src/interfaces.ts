@@ -8,6 +8,7 @@ export enum DataTypes {
   boolean = "boolean",
   list = "list",
   object = "object",
+  staticList = "static list",
   listOfStrings = "list of strings",
   listOfNumbers = "list of numbers",
   listOfBooleans = "list of booleans",
@@ -18,10 +19,13 @@ export const DefaultValues = {
   number: 0,
   boolean: true,
   list: [],
-  listOfStrings: ["string"],
+  listOfStrings: [""],
   listOfNumbers: [0],
   listOfBooleans: [true],
   object: {},
+  "list of strings": [""],
+  "list of numbers": [0],
+  "list of booleans": [true],
 };
 
 export interface TreeData {

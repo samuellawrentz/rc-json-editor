@@ -16,6 +16,7 @@ export abstract class TreeUtils {
       const isList = Array.isArray(value);
       const isObject = type === DataTypes.object || type === DataTypes.list;
       const path = `${parentKey ? `${parentKey}.` : ""}${item}`;
+
       const isAllPrimitive = isList && !TreeUtils.isAllPrimitive(value);
       const response_value =
         type === DataTypes.object || isAllPrimitive ? "" : value;
@@ -42,6 +43,7 @@ export abstract class TreeUtils {
         level,
         response_value,
         selected: false,
+        originalValue: isList ? value : undefined,
         data_type: type,
         sub_object: [] as Json[],
       }.setSubObject();
@@ -88,10 +90,13 @@ export abstract class TreeUtils {
     });
   };
 
+  // Need to optimize this function
+  // Use loadash to pick or omit keys, instead of manually doing stuff
   static cleanTree = (
     tree: Json[],
     removeResponseKey = true,
-    isRequestBody = false
+    isRequestBody = false,
+    removeResponseValue = true
   ): Json[] => {
     return tree.map((item) => {
       item.parent =
@@ -105,13 +110,15 @@ export abstract class TreeUtils {
         item.selected = undefined;
         item.value = item?.response_value;
       }
-      item.response_value = undefined;
+
+      if (removeResponseValue) item.response_value = undefined;
       // Recursion
       if (item.sub_object?.length)
         item.sub_object = TreeUtils.cleanTree(
           item.sub_object,
           removeResponseKey,
-          isRequestBody
+          isRequestBody,
+          removeResponseValue
         );
       return item;
     });

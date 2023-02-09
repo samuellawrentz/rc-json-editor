@@ -30,7 +30,7 @@
                 content: '';
                 position: absolute;
                 display: block;
-                height: calc(100% + 16px);
+                height: calc(100% + 24px);
                 top: 0px;
                 left: 8px;
                 width: 1px;
@@ -52,7 +52,7 @@
             }
         }
         .item {
-            margin-top: 16px;
+            margin-top: 24px;
             position: relative;
             display: flex;
             column-gap: 16px;

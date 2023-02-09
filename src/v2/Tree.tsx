@@ -2,23 +2,20 @@
 // The Tree component that calls itself until its
 // exhausted of objects in the tree
 // Can be optimized and refactored a bit
-import React from "react";
-import { ArrayItem, Json, TreeMethods } from "../interfaces";
+import React, { useMemo } from "react";
+import { ArrayItem, DataTypes, TreeMethods } from "../interfaces";
 import DefaultItemComponent from "./DefaultItemComponent";
 import "./style.scss";
-import { useTreeHandler } from "./useTreeHandler";
 
 interface JsonEditorProps {
   data: ArrayItem[];
   ItemComponent?: React.ComponentType<any>;
-  stateUpdater: (data: Json[]) => void;
   treeMethods: TreeMethods;
 }
 
 export const JsonTree = ({
   data,
   ItemComponent,
-  stateUpdater,
   treeMethods,
 }: JsonEditorProps) => {
   return (
@@ -30,13 +27,21 @@ export const JsonTree = ({
           idx,
           ...treeMethods,
         };
-        const RowComponent = ItemComponent || DefaultItemComponent;
+
+        const RowComponent = useMemo(
+          () => ItemComponent || DefaultItemComponent,
+          [item]
+        );
+
         return (
           <React.Fragment key={idx}>
             <div
-              key={idx}
               className={`item ${
                 item.sub_object?.length ? "has-children" : ""
+              } ${
+                item.parent?.data_type === DataTypes.staticList
+                  ? "static-list-item"
+                  : ""
               }`}
             >
               <RowComponent {...rowProps} />
@@ -45,7 +50,6 @@ export const JsonTree = ({
                 <JsonTree
                   data={item.sub_object}
                   ItemComponent={ItemComponent}
-                  stateUpdater={stateUpdater}
                   treeMethods={treeMethods}
                 />
               )}

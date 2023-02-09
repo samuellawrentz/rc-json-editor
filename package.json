@@ -1,6 +1,6 @@
 {
   "name": "rc-json-editor",
-  "version": "2.0.24",
+  "version": "2.0.28",
   "description": "A simple JSON Editor React Component",
   "main": "build/index.js",
   "module": "build/index.es.js",
@@ -8,6 +8,7 @@
     "build"
   ],
   "scripts": {
+    "watch": "rollup -c -w",
     "test": "jest --watch --runInBand",
     "coverage": "jest --coverage",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
