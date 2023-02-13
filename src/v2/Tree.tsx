@@ -28,33 +28,29 @@ export const JsonTree = ({
           ...treeMethods,
         };
 
-        const RowComponent = useMemo(
-          () => ItemComponent || DefaultItemComponent,
-          [item]
-        );
+        const RowComponent = useMemo(() => {
+          return ItemComponent || DefaultItemComponent;
+        }, []);
 
         return (
-          <React.Fragment key={idx}>
-            <div
-              className={`item ${
-                item.sub_object?.length ? "has-children" : ""
-              } ${
-                item.parent?.data_type === DataTypes.staticList
-                  ? "static-list-item"
-                  : ""
-              }`}
-            >
-              <RowComponent {...rowProps} />
+          <div
+            key={item.data_type}
+            className={`item ${item.sub_object?.length ? "has-children" : ""} ${
+              item.parent?.data_type === DataTypes.staticList
+                ? "static-list-item"
+                : ""
+            }`}
+          >
+            <RowComponent {...rowProps} />
 
-              {!!item.sub_object?.length && (
-                <JsonTree
-                  data={item.sub_object}
-                  ItemComponent={ItemComponent}
-                  treeMethods={treeMethods}
-                />
-              )}
-            </div>
-          </React.Fragment>
+            {!!item.sub_object?.length && (
+              <JsonTree
+                data={item.sub_object}
+                ItemComponent={ItemComponent}
+                treeMethods={treeMethods}
+              />
+            )}
+          </div>
         );
       })}
     </div>
