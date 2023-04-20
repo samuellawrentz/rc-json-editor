@@ -56,6 +56,7 @@ function DefaultItemComponent({
           <option value="list of strings">Array of Strings</option>
           <option value="list of numbers">Array of Numbers</option>
           <option value="list of booleans">Array of Booleans</option>
+          <option value="static list">Static List</option>
           <option value="string">String</option>
           <option value="object">Object</option>
           <option value="number">Number</option>

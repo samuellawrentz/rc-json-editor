@@ -63,21 +63,20 @@ export const useTreeHandler = (mainData: Json[], onChange: any) => {
 
   const updateNodeType = (item: Json, type: string) => {
     item.data_type = type;
-    item.sub_object = [];
     if (type === DataTypes.object)
       item.sub_object = [TreeUtils.generateNewNode(item)];
-    else if (type === DataTypes.staticList)
-      item.sub_object = TreeUtils.convertJSONtoTree(
-        item.originalValue,
-        item,
-        item.response_key
-      );
-    else if (type === DataTypes.list)
-      item.sub_object = TreeUtils.convertJSONtoTree(
-        TreeUtils.getObjectFromList(item.originalValue),
-        item,
-        item.response_key
-      );
+    // else if (type === DataTypes.staticList)
+    //   item.sub_object = TreeUtils.convertJSONtoTree(
+    //     item.originalValue,
+    //     item,
+    //     item.response_key
+    //   );
+    // else if (type === DataTypes.list)
+    //   item.sub_object = TreeUtils.convertJSONtoTree(
+    //     TreeUtils.getObjectFromList(item.originalValue),
+    //     item,
+    //     item.response_key
+    //   );
   };
 
   const removeNode = (itemList: Json[] | undefined, idx: number) => {

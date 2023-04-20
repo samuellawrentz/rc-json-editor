@@ -43,7 +43,6 @@ export abstract class TreeUtils {
         level,
         response_value,
         selected: false,
-        originalValue: isList ? value : undefined,
         data_type: type,
         sub_object: [] as Json[],
       }.setSubObject();
@@ -59,8 +58,13 @@ export abstract class TreeUtils {
       if (treeItem?.sub_object?.length) {
         // Recursion
         let value;
-        if (treeItem.data_type === DataTypes.list)
-          value = [TreeUtils.convertTreetoJSON(treeItem.sub_object)];
+        if (
+          treeItem.data_type === DataTypes.list ||
+          treeItem.data_type === DataTypes.staticList
+        )
+          value = treeItem.meta?.original_value || [
+            TreeUtils.convertTreetoJSON(treeItem.sub_object),
+          ];
         else value = TreeUtils.convertTreetoJSON(treeItem.sub_object);
         json[key] = value;
       }
@@ -78,6 +82,14 @@ export abstract class TreeUtils {
       item.parent = parent;
       item.level = level;
       item.parentIndex = parentIndex;
+      if (item.related_value) item.related_value.parent = item;
+      if (item.transformed_sub_object?.length)
+        item.transformed_sub_object = TreeUtils.transformTree(
+          item.transformed_sub_object,
+          item,
+          level,
+          idx
+        );
       // Recursion
       if (item.sub_object?.length)
         item.sub_object = TreeUtils.transformTree(
@@ -112,6 +124,14 @@ export abstract class TreeUtils {
       }
 
       if (removeResponseValue) item.response_value = undefined;
+      if (item.related_value) item.related_value.parent = undefined;
+      if (item.transformed_sub_object?.length)
+        item.transformed_sub_object = TreeUtils.cleanTree(
+          item.transformed_sub_object,
+          removeResponseKey,
+          isRequestBody,
+          removeResponseValue
+        );
       // Recursion
       if (item.sub_object?.length)
         item.sub_object = TreeUtils.cleanTree(

@@ -28,13 +28,11 @@ export const JsonTree = ({
           ...treeMethods,
         };
 
-        const RowComponent = useMemo(() => {
-          return ItemComponent || DefaultItemComponent;
-        }, []);
+        const RowComponent = ItemComponent || DefaultItemComponent;
 
         return (
           <div
-            key={item.data_type}
+            key={idx}
             className={`item ${item.sub_object?.length ? "has-children" : ""} ${
               item.parent?.data_type === DataTypes.staticList
                 ? "static-list-item"
